@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'pages/login.dart';
 
 final routes = {
-  '/': (BuildContext context) => LoginPage(),
-  '/login': (BuildContext context) => LoginPage()
+  '/': (BuildContext context) => const LoginPage(),
+  '/login': (BuildContext context) => const LoginPage()
 };
 
 void main() {
   runApp(MaterialApp(
     title: "Login",
     debugShowCheckedModeBanner: false,
-    theme: new ThemeData(primarySwatch: Colors.teal),
+    theme: ThemeData(primarySwatch: Colors.teal),
     routes: routes,
   ));
 }

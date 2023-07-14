@@ -11,9 +11,9 @@ class User {
   // pega usuario e retorna objeto map dele
   Map<String, dynamic> toMap(){
     return <String, dynamic>{
-      "id": this.id,
-      "username": this.username,
-      "password": this.password
+      "id": id,
+      "username": username,
+      "password": password
     };
   }
 

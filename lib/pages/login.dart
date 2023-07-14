@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             );
 
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text("Usuário não registrado!")
             )
         );
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
     switch(_loginStatus){
       case LoginStatus.notSignIn:
         return Scaffold(
-          appBar: AppBar(title: Text("Login Page")),
+          appBar: AppBar(title: const Text("Login Page")),
           body: Container(
             child: Center(
               child: Column(
@@ -87,22 +87,22 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: TextFormField(
                             onSaved: (newValue) => _username = newValue,  
                             //muda a variavel, ao inves de usar controller
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Usuário",
                               border: OutlineInputBorder(),
                             ),
                           )
                         ),
                         Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: TextFormField(
                             onSaved: (newValue) => _password = newValue,  
                             //muda a variavel, ao inves de usar controller
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Senha",
                               border: OutlineInputBorder(),
                             ),
@@ -110,10 +110,10 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       ]),
                   ), 
-                  ElevatedButton(onPressed: _submit, child: Text("Login"))]),)),
+                  ElevatedButton(onPressed: _submit, child: const Text("Login"))]),)),
         );
       case LoginStatus.signIn:
-        return HomePage();
+        return const HomePage();
     }
   }
 }

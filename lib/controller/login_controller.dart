@@ -1,33 +1,27 @@
-import 'package:login/helper/database_helper.dart';
+import 'package:catalogo_de_videos/helper/database_helper.dart';
+import 'package:catalogo_de_videos/model/user.dart';
 
-import '../model/user.dart';
-
-class LoginController{
+class LoginController {
   DatabaseHelper con = DatabaseHelper();
 
-  Future<int> saveUser(User user) async{
+  Future<int> saveUser(User user) async {
     var db = await con.db;
 
-    int result = await db.insert(
-      "user", 
-      user.toMap());
+    int result = await db.insert("user", user.toMap());
 
     return result;
   }
 
-  Future<int> deleteUser(User user) async{
+  Future<int> deleteUser(User user) async {
     var db = await con.db;
 
-    int result = await db.delete(
-      "user", 
-      where: "id=?", 
-      whereArgs: [user.id]);
+    int result = await db.delete("user", where: "id=?", whereArgs: [user.id]);
 
     return result;
   }
 
   // a partir do user e senha, tenta pegar o login
-  Future<User> getLogin(String username, String password) async{
+  Future<User> getLogin(String username, String password) async {
     var db = await con.db;
 
     String sql = """
@@ -38,7 +32,7 @@ class LoginController{
     var result = await db.rawQuery(sql);
 
     // significa que query retornou algo
-    if (result.length >0){
+    if (result.isNotEmpty) {
       return User.fromMap(result.first);
     }
 
@@ -49,6 +43,4 @@ class LoginController{
       password: "",
     );
   }
-
-
 }
