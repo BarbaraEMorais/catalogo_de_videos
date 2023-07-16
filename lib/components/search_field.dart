@@ -23,12 +23,19 @@ class SearchField extends StatelessWidget {
                     ),
                     child: TextField(
                       onTap: () => {print(_searchController.text)},
+                      onTapOutside: ((event) {
+                        FocusScope.of(context).unfocus();
+                      }),
                       controller: _searchController,
                       keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                          labelText: "Pesquisar",
-                          suffixIcon: Icon(Icons.search),
+                      cursorColor: ThemeColors.text,
+                      decoration: InputDecoration(
+                          label: Text("Pesquisar", style:TextStyle(color: ThemeColors.text)),
+                          //labelText: "Pesquisar",
+                          suffixIcon: Icon(Icons.search, color: ThemeColors.text),
                           border: InputBorder.none),
+                          style: TextStyle(color: ThemeColors.text),
+                           
                     )))),
       ],
     );
