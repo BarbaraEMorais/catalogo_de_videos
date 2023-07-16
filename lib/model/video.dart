@@ -1,4 +1,4 @@
-import 'package:catalogo_de_videos/model/video_genre.dart';
+
 
 class Video {
   int id;
@@ -9,7 +9,6 @@ class Video {
   int durationMinutes;
   int thumbnailImageId;
   DateTime releaseDate;
-  VideoGenre genre;
 
   Video(
       this.id,
@@ -18,7 +17,6 @@ class Video {
       this.type,
       this.ageRestriction,
       this.durationMinutes,
-      this.genre,
       this.releaseDate,
       this.thumbnailImageId);
 }

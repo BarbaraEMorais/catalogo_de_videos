@@ -1,5 +1,6 @@
 import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
+import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Home")),
+        backgroundColor: ThemeColors.background,
         body: Column(
           children: [
             PostersDisplay(title: "Filmes", children: [

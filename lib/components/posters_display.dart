@@ -1,4 +1,5 @@
 import 'package:catalogo_de_videos/components/video_card.dart';
+import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class PostersDisplay extends StatelessWidget {
@@ -17,8 +18,8 @@ class PostersDisplay extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10, bottom: 5),
                 child: Text(
                   title,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold, color: ThemeColors.text),
                 )),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

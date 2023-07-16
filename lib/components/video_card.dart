@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../styles/theme_colors.dart';
 
 class VideoCard extends StatelessWidget {
   late String url;
@@ -17,7 +18,7 @@ class VideoCard extends StatelessWidget {
                 height: 230,
                 width: 155,
               ),
-              Text(name)
+              Text(name, style: TextStyle(color: ThemeColors.text),)
             ])));
   }
 }
