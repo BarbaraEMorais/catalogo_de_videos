@@ -19,7 +19,9 @@ class PostersDisplay extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold, color: ThemeColors.text),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: ThemeColors.text),
                 )),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
