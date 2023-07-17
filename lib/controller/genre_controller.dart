@@ -1,7 +1,7 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/genre.dart';
 
-class LoginController {
+class GenreController {
   DatabaseHelper con = DatabaseHelper();
 
   Future<int> saveGenre(Genre genre) async {
