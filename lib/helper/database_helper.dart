@@ -115,7 +115,7 @@ class DatabaseHelper {
 
         for (int i = 0; i < 4; i++) {
           String sql_insert_video =
-              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme ${videos[i]["name"]}', 'Descrição $i', 0, '18 anos', 120, '${videos[i]["url"]}', '01/01/2020');";
+              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('${videos[i]["name"]}', 'Descrição $i', 0, '18 anos', 120, '${videos[i]["url"]}', '01/01/2020');";
           await db.execute(sql_insert_video);
         }
 

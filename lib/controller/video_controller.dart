@@ -1,7 +1,5 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
@@ -22,26 +20,19 @@ class VideoController {
     return result;
   }
 
-  // a partir do user e senha, tenta pegar o login
-  Future<List<Video>> getVideos() async {
+  Future<List<Video>> getMovies() async {
     var db = await con.db;
 
     String sql = """
-    SELECT * FROM video;
+    SELECT * FROM video WHERE type = 0;
     """;
 
-    // se precisar apagar a tabela
-    // final databasePath = await getDatabasesPath();
-    // final path = p.join(databasePath, "data.db");
-    // databaseFactory.deleteDatabase(path);
     var result = await db.rawQuery(sql);
-    List<Video> videos = <Video>[];
+    List<Video> movies = <Video>[];
 
-    for (var video in result) {
-      Video novo_video = Video.fromMap(video);
-      videos.add(novo_video);
+    for (var movie in result) {
+      movies.add(Video.fromMap(movie));
     }
-    return videos;
-    // return videos;
+    return movies;
   }
 }

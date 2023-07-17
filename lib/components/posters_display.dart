@@ -3,9 +3,10 @@ import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class PostersDisplay extends StatelessWidget {
-  List<VideoCard> children = const <VideoCard>[];
-  late String title;
-  PostersDisplay({required this.title, required this.children, super.key});
+  final List<VideoCard> children;
+  final String title;
+  const PostersDisplay(
+      {required this.title, required this.children, super.key});
 
   @override
   Widget build(BuildContext context) {
