@@ -90,9 +90,32 @@ class DatabaseHelper {
           await db.execute(sql_insert_genre);
         }
 
-        for (int i = 1; i < 6; i++) {
+        List<Map<String, String>> videos = [
+          {
+            "name": "A casa monstro",
+            "url":
+                "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/61da8438155793.57575971afe13.jpg",
+          },
+          {
+            "name": "Avatar",
+            "url":
+                "http://3.bp.blogspot.com/-H57vRpipBhs/T92h_GLMFAI/AAAAAAAAAAc/zLYxoSfXv9w/s1600/avatar_movie_poster_final_01.jpg",
+          },
+          {
+            "name": "Piratas do Caribe",
+            "url":
+                "http://images2.fanpop.com/images/photos/8400000/Movie-Posters-movies-8405245-1224-1773.jpg",
+          },
+          {
+            "name": "Liga da Justiça",
+            "url":
+                "https://www.slashfilm.com/wp/wp-content/images/2017-bestposter-justiceleague.jpg",
+          }
+        ];
+
+        for (int i = 0; i < 4; i++) {
           String sql_insert_video =
-              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme $i', 'Descrição $i', 0, '18 anos', 120, 'url imagem', '01/01/2020');";
+              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme ${videos[i]["name"]}', 'Descrição $i', 0, '18 anos', 120, '${videos[i]["url"]}', '01/01/2020');";
           await db.execute(sql_insert_video);
         }
 
@@ -120,7 +143,6 @@ class DatabaseHelper {
         await db.execute(add_video_genre_7);
       },
     );
-
     return db;
   }
 }

@@ -5,7 +5,6 @@ import 'package:path/path.dart' as p;
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
-  List<Map<String, dynamic>> videos = const <Map<String, dynamic>>[];
 
   Future<int> saveVideo(Video video) async {
     var db = await con.db;
@@ -24,7 +23,7 @@ class VideoController {
   }
 
   // a partir do user e senha, tenta pegar o login
-  void getVideos() async {
+  Future<List<Video>> getVideos() async {
     var db = await con.db;
 
     String sql = """
@@ -35,13 +34,14 @@ class VideoController {
     // final databasePath = await getDatabasesPath();
     // final path = p.join(databasePath, "data.db");
     // databaseFactory.deleteDatabase(path);
-
     var result = await db.rawQuery(sql);
+    List<Video> videos = <Video>[];
 
-    print(result);
-    // for (var video in result) {
-    //   videos.add(video);
-    // }
+    for (var video in result) {
+      Video novo_video = Video.fromMap(video);
+      videos.add(novo_video);
+    }
+    return videos;
     // return videos;
   }
 }
