@@ -66,39 +66,60 @@ class DatabaseHelper {
                 );
             """;
 
-        // INSERT INTO user(name, email, password) VALUES('Teste 1', 'teste1@teste', '123456');
-        // INSERT INTO user(name, email, password) VALUES('Teste 2', 'teste2@teste', '123456');
-        // INSERT INTO user(name, email, password) VALUES('Teste 3', 'teste3@teste', '123456');
-        // INSERT INTO user(name, email, password) VALUES('Teste 4', 'teste4@teste', '123456');
-        // INSERT INTO user(name, email, password) VALUES('Teste 5', 'teste5@teste', '123456');
-
-        // INSERT INTO genre(name) VALUES('Comedia');
-        // INSERT INTO genre(name) VALUES('Terror');
-        // INSERT INTO genre(name) VALUES('Aventura');
-        // INSERT INTO genre(name) VALUES('Suspense');
-        // INSERT INTO genre(name) VALUES('Ação');
-
-        // INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme 1', 'Descrição 1', 0, '18 anos', 120, 'url imagem', '01/01/2020');
-        // INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme 2', 'Descrição 2', 0, '18 anos', 120, 'url imagem', '01/01/2020');
-        // INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme 3', 'Descrição 3', 0, '18 anos', 120, 'url imagem', '01/01/2020');
-        // INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme 4', 'Descrição 4', 0, '18 anos', 120, 'url imagem', '01/01/2020');
-        // INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme 5', 'Descrição 5', 0, '18 anos', 120, 'url imagem', '01/01/2020');
-
-        // INSERT INTO video_genre(videoid, genreid) VALUES(1, 1);
-        // INSERT INTO video_gvideoidenre(videoid, genreid) VALUES(1, 2);
-        // INSERT INTO video_genre(videoid, genreid) VALUES(2, 5);
-        // INSERT INTO video_genre(videoid, genreid) VALUES(3, 4);
-        // INSERT INTO video_genre(videoid, genreid) VALUES(4, 3);
-        // INSERT INTO video_genre(videoid, genreid) VALUES(5, 1);
-        // INSERT INTO video_genre(videoid, genreid) VALUES(5, 5);
-
         await db.execute(sql_user);
         await db.execute(sql_genre);
         await db.execute(sql_video);
         await db.execute(sql_video_genre);
+
+        for (int i = 1; i < 6; i++) {
+          String sql_insert_user =
+              "INSERT INTO user(name, email, password) VALUES('Teste $i', 'teste$i@teste', '123456');";
+          await db.execute(sql_insert_user);
+        }
+
+        List<String> generos = [
+          'Comedia',
+          'Terror',
+          'Aventura',
+          'Suspense',
+          'Ação'
+        ];
+        for (String genero in generos) {
+          String sql_insert_genre =
+              "INSERT INTO genre(name) VALUES('$genero');";
+          await db.execute(sql_insert_genre);
+        }
+
+        for (int i = 1; i < 6; i++) {
+          String sql_insert_video =
+              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Filme $i', 'Descrição $i', 0, '18 anos', 120, 'url imagem', '01/01/2020');";
+          await db.execute(sql_insert_video);
+        }
+
+        String add_video_genre_1 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(1, 1);";
+        String add_video_genre_2 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(1, 2);";
+        String add_video_genre_3 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(2, 5);";
+        String add_video_genre_4 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(3, 4);";
+        String add_video_genre_5 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(4, 3);";
+        String add_video_genre_6 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(5, 1);";
+        String add_video_genre_7 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(5, 5);";
+
+        await db.execute(add_video_genre_1);
+        await db.execute(add_video_genre_2);
+        await db.execute(add_video_genre_3);
+        await db.execute(add_video_genre_4);
+        await db.execute(add_video_genre_5);
+        await db.execute(add_video_genre_6);
+        await db.execute(add_video_genre_7);
       },
     );
-    print("database: $db");
 
     return db;
   }
