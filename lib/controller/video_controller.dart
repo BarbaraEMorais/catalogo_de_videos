@@ -35,4 +35,20 @@ class VideoController {
     }
     return movies;
   }
+
+  Future<List<Video>> getSeries() async {
+    var db = await con.db;
+
+    String sql = """
+    SELECT * FROM video WHERE type = 1;
+    """;
+
+    var result = await db.rawQuery(sql);
+    List<Video> series = <Video>[];
+
+    for (var serie in result) {
+      series.add(Video.fromMap(serie));
+    }
+    return series;
+  }
 }
