@@ -1,7 +1,7 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/user.dart';
 
-class LoginController {
+class CadastroController {
   DatabaseHelper con = DatabaseHelper();
 
   Future<int> saveUser(User user) async {
@@ -20,8 +20,8 @@ class LoginController {
     return result;
   }
 
-  // a partir do user e senha, tenta pegar o login
-  Future<User> getLogin(String name, String password) async {
+  // a partir do user e senha, tenta pegar o Cadastro
+  Future<User> getCadastro(String name, String password) async {
     var db = await con.db;
 
     String sql = """

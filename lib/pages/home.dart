@@ -8,6 +8,7 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import '../model/video.dart';
 
 class HomePage extends StatefulWidget {
+  static String routeName = "/home";
   const HomePage({super.key});
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
 import '../model/user.dart';
 import 'home.dart';
@@ -10,6 +10,7 @@ enum LoginStatus{
 }
 
 class LoginPage extends StatefulWidget {
+  static String routeName = "/";
   const LoginPage({super.key});
 
   @override
@@ -20,9 +21,10 @@ class _LoginPageState extends State<LoginPage> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   final _formKey = GlobalKey<FormState>(); 
   // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
-  String? _username, _password;
+  String? _name, _password;
   // late so instancia quando precisar usar
   late LoginController controller;
+  var value;
 
   // ou seja, instancia o controller se a pagina for chamada
   _LoginPageState(){
@@ -40,19 +42,13 @@ class _LoginPageState extends State<LoginPage> {
       //verifica se login e usuario bate com banco de dados
       
       try{
-        User user = await controller.getLogin(_username!, _password!);
+        User user = await controller.getLogin(_name!, _password!);
 
         if (user.id != -1){
-          _loginStatus = LoginStatus.signIn;
+          setState(() {
+            _loginStatus = LoginStatus.signIn;
+          });
         } else {
-
-          // exemplo de saveUser na mao
-
-          await controller.saveUser(
-            User(
-              username: _username!, 
-              password: _password!)
-            );
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -69,6 +65,41 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }
+  }
+
+  signOut() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      preferences.setInt("value", 0);
+      _loginStatus = LoginStatus.notSignIn;
+    });
+  }
+
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      value = preferences.getInt("value");
+
+      _loginStatus = value == 1? LoginStatus.signIn : LoginStatus.notSignIn;
+    });
+  }
+
+  savePref(int value, String user, String pass) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      preferences.setInt("value", value);
+      preferences.setString("user", user);
+      preferences.setString("pass", pass);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPref();
   }
 
   // switch case dentro do build dependendo do status
@@ -89,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.all(20),
                           child: TextFormField(
-                            onSaved: (newValue) => _username = newValue,  
+                            onSaved: (newValue) => _name = newValue,  
                             //muda a variavel, ao inves de usar controller
                             decoration: const InputDecoration(
                               labelText: "Usuário",
