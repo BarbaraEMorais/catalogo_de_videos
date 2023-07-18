@@ -1,3 +1,4 @@
+import 'package:catalogo_de_videos/pages/cadastro.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
@@ -21,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   final _formKey = GlobalKey<FormState>(); 
   // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
-  String? _name, _password;
+  String? _email, _password;
   // late so instancia quando precisar usar
   late LoginController controller;
   var value;
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       //verifica se login e usuario bate com banco de dados
       
       try{
-        User user = await controller.getLogin(_name!, _password!);
+        User user = await controller.getLogin(_email!, _password!);
 
         if (user.id != -1){
           setState(() {
@@ -120,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.all(20),
                           child: TextFormField(
-                            onSaved: (newValue) => _name = newValue,  
+                            onSaved: (newValue) => _email = newValue,  
                             //muda a variavel, ao inves de usar controller
                             decoration: const InputDecoration(
                               labelText: "Usuário",
@@ -141,7 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       ]),
                   ), 
-                  ElevatedButton(onPressed: _submit, child: const Text("Login"))]),)),
+                  ElevatedButton(onPressed: _submit, child: const Text("Login")),
+                  ElevatedButton(onPressed: ()=>{ Navigator.pushNamed(context, CadastroPage.routeName)}, child: const Text("Cadastre-se"))]),)),
         );
       case LoginStatus.signIn:
         return const HomePage();

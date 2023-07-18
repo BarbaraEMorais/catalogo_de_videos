@@ -21,12 +21,12 @@ class LoginController {
   }
 
   // a partir do user e senha, tenta pegar o login
-  Future<User> getLogin(String name, String password) async {
+  Future<User> getLogin(String email, String password) async {
     var db = await con.db;
 
     String sql = """
     SELECT * FROM user 
-    WHERE name='$name' AND password='$password';
+    WHERE email='$email' AND password='$password';
     """;
 
     var result = await db.rawQuery(sql);
@@ -39,6 +39,7 @@ class LoginController {
     // usuario padrao de erro
     return User(
       id: -1,
+      email: "",
       name: "",
       password: "",
     );

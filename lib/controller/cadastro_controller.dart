@@ -39,8 +39,26 @@ class CadastroController {
     // usuario padrao de erro
     return User(
       id: -1,
+      email: "",
       name: "",
       password: "",
     );
+  }
+
+  Future<bool> verifyEmail(String email) async {
+    var db = await con.db;
+
+    String sql = """
+    SELECT * FROM user 
+    WHERE email='$email';
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    // significa que query retornou algo
+    if (result.isEmpty) {
+      return true;
+    }
+    return false;
   }
 }
