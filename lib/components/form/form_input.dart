@@ -8,13 +8,14 @@ class FormInput extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
 
-  const FormInput(
-      {super.key,
-      required this.label,
-      required this.maxLines,
-      required this.onChanged,
-      required this.keyboardType,
-      required this.validator});
+  const FormInput({
+    super.key,
+    required this.label,
+    required this.onChanged,
+    this.maxLines = 1,
+    this.keyboardType = TextInputType.text,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {

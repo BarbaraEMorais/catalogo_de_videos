@@ -40,9 +40,7 @@ class _AddVideoState extends State<AddVideo> {
                   child: Column(children: [
                     FormInput(
                       label: "Nome",
-                      maxLines: 1,
                       onChanged: (value) => {name = value},
-                      keyboardType: TextInputType.text,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira um nome!';
@@ -52,9 +50,7 @@ class _AddVideoState extends State<AddVideo> {
                     ),
                     FormInput(
                       label: "URL da imagem",
-                      maxLines: 1,
                       onChanged: (value) => {url = value},
-                      keyboardType: TextInputType.text,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira uma URL!';
@@ -68,7 +64,6 @@ class _AddVideoState extends State<AddVideo> {
                       label: "Descrição",
                       maxLines: 3,
                       onChanged: (value) => {description = value},
-                      keyboardType: TextInputType.text,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira uma descrição!';
@@ -78,7 +73,6 @@ class _AddVideoState extends State<AddVideo> {
                     ),
                     FormInput(
                       label: "Restrição de idade",
-                      maxLines: 1,
                       onChanged: (value) => {ageRestriction = "$value anos"},
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -93,7 +87,6 @@ class _AddVideoState extends State<AddVideo> {
                     ),
                     FormInput(
                       label: "Duração (minutos)",
-                      maxLines: 1,
                       onChanged: (value) => {duration = int.parse(value)},
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -105,15 +98,13 @@ class _AddVideoState extends State<AddVideo> {
                     ),
                     FormInput(
                       label: "Data de Lançamento (dd/mm/aaaa)",
+                      onChanged: (value) => {releaseDate = value},
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira uma data!';
                         }
                         return null;
                       },
-                      maxLines: 1,
-                      onChanged: (value) => {releaseDate = value},
-                      keyboardType: TextInputType.text,
                     ),
                     FormRadioButtons(
                       onChanged: (value) {
