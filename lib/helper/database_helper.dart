@@ -119,6 +119,11 @@ class DatabaseHelper {
           await db.execute(sql_insert_video);
         }
 
+        String add_serie =
+            "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Stranger Things', 'Série Stranger Things', 1, '18 anos', 120, 'https://4.bp.blogspot.com/-Y3sysg_oCA8/WLqVr3NC3oI/AAAAAAAASTk/bZWmIYtjdJwRkLoGn1md3DCVpOGMqMsxACEw/s1600/BOOMGERS201606300002STRANGER.jpg', '01/01/2020');";
+
+        await db.execute(add_serie);
+
         String add_video_genre_1 =
             "INSERT INTO video_genre(videoid, genreid) VALUES(1, 1);";
         String add_video_genre_2 =
