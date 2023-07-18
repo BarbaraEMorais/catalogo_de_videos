@@ -30,12 +30,12 @@ class SearchField extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       cursorColor: ThemeColors.text,
                       decoration: InputDecoration(
-                          label: Text("Pesquisar", style:TextStyle(color: ThemeColors.text)),
-                          //labelText: "Pesquisar",
-                          suffixIcon: Icon(Icons.search, color: ThemeColors.text),
+                          label: Text("Pesquisar",
+                              style: TextStyle(color: ThemeColors.text)),
+                          suffixIcon:
+                              Icon(Icons.search, color: ThemeColors.text),
                           border: InputBorder.none),
-                          style: TextStyle(color: ThemeColors.text),
-                           
+                      style: TextStyle(color: ThemeColors.text),
                     )))),
       ],
     );
