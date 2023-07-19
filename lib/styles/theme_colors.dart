@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ThemeColors {
-  static Color background = const Color.fromARGB(17, 17, 17, 255);
+  static Color background = Color.fromARGB(255, 8, 1, 17);
   static Color text = const Color.fromARGB(255, 255, 255, 255);
   static Color appBar = const Color.fromARGB(255, 25, 25, 25);
   static Color formInput = Color.fromARGB(199, 159, 165, 255);
+  static Color purple = Color.fromARGB(255, 135, 122, 255);
+  static Color dark = Color.fromARGB(255, 0, 0, 8);
 }
