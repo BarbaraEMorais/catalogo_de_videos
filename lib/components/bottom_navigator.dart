@@ -25,7 +25,7 @@ class BottomNavigatorBarWidget extends StatelessWidget {
       ],
       currentIndex: index,
       selectedItemColor: ThemeColors.purple,
-      unselectedItemColor: const Color.fromARGB(255, 107, 107, 107),
+      unselectedItemColor: ThemeColors.grey,
       // onTap: 1,
     );
   }

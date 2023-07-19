@@ -33,14 +33,21 @@ class VideoCard extends StatelessWidget {
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
+                      return Container(
+                          height: cardWidth * 1.5,
+                          width: cardWidth,
+                          decoration: BoxDecoration(
+                              color: ThemeColors.grey,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ));
                     },
                   )),
               Container(
