@@ -5,10 +5,7 @@ import '../controller/login_controller.dart';
 import '../model/user.dart';
 import 'home.dart';
 
-enum LoginStatus{
-  notSignIn,
-  signIn
-}
+enum LoginStatus { notSignIn, signIn }
 
 class LoginPage extends StatefulWidget {
   static String routeName = "/";
@@ -20,7 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
   // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
   String? _email, _password;
   // late so instancia quando precisar usar
@@ -28,42 +25,33 @@ class _LoginPageState extends State<LoginPage> {
   var value;
 
   // ou seja, instancia o controller se a pagina for chamada
-  _LoginPageState(){
+  _LoginPageState() {
     controller = LoginController();
   }
 
-
-  void _submit() async{
+  void _submit() async {
     final form = _formKey.currentState;
 
     // valida todos os campos
-    if (form!.validate()){
+    if (form!.validate()) {
       form.save();
 
       //verifica se login e usuario bate com banco de dados
-      
-      try{
+
+      try {
         User user = await controller.getLogin(_email!, _password!);
 
-        if (user.id != -1){
+        if (user.id != -1) {
           setState(() {
             _loginStatus = LoginStatus.signIn;
           });
         } else {
-
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Usuário não registrado!")
-            )
-        );
+              const SnackBar(content: Text("Usuário não registrado!")));
         }
-
-      } catch(e){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString())
-          )
-        );
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
   }
@@ -83,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       value = preferences.getInt("value");
 
-      _loginStatus = value == 1? LoginStatus.signIn : LoginStatus.notSignIn;
+      _loginStatus = value == 1 ? LoginStatus.signIn : LoginStatus.notSignIn;
     });
   }
 
@@ -106,44 +94,45 @@ class _LoginPageState extends State<LoginPage> {
   // switch case dentro do build dependendo do status
   @override
   Widget build(BuildContext context) {
-    switch(_loginStatus){
+    switch (_loginStatus) {
       case LoginStatus.notSignIn:
         return Scaffold(
           appBar: AppBar(title: const Text("Login Page")),
           body: Container(
-            child: Center(
-              child: Column(
-                children: [
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: TextFormField(
-                            onSaved: (newValue) => _email = newValue,  
-                            //muda a variavel, ao inves de usar controller
-                            decoration: const InputDecoration(
-                              labelText: "Usuário",
-                              border: OutlineInputBorder(),
-                            ),
-                          )
+              child: Center(
+            child: Column(children: [
+              Form(
+                key: _formKey,
+                child: Column(children: [
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: TextFormField(
+                        onSaved: (newValue) => _email = newValue,
+                        //muda a variavel, ao inves de usar controller
+                        decoration: const InputDecoration(
+                          labelText: "Usuário",
+                          border: OutlineInputBorder(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: TextFormField(
-                            onSaved: (newValue) => _password = newValue,  
-                            //muda a variavel, ao inves de usar controller
-                            decoration: const InputDecoration(
-                              labelText: "Senha",
-                              border: OutlineInputBorder(),
-                            ),
-                          )
-                        )
-                      ]),
-                  ), 
-                  ElevatedButton(onPressed: _submit, child: const Text("Login")),
-                  ElevatedButton(onPressed: ()=>{ Navigator.pushNamed(context, CadastroPage.routeName)}, child: const Text("Cadastre-se"))]),)),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: TextFormField(
+                        onSaved: (newValue) => _password = newValue,
+                        //muda a variavel, ao inves de usar controller
+                        decoration: const InputDecoration(
+                          labelText: "Senha",
+                          border: OutlineInputBorder(),
+                        ),
+                      ))
+                ]),
+              ),
+              ElevatedButton(onPressed: _submit, child: const Text("Login")),
+              ElevatedButton(
+                  onPressed: () =>
+                      {Navigator.pushNamed(context, CadastroPage.routeName)},
+                  child: const Text("Cadastre-se"))
+            ]),
+          )),
         );
       case LoginStatus.signIn:
         return const HomePage();
