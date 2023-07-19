@@ -1,4 +1,5 @@
 import 'package:catalogo_de_videos/pages/add_video.dart';
+import 'package:catalogo_de_videos/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/search_field.dart';
@@ -42,7 +43,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text("Home"), backgroundColor: ThemeColors.appBar),
+            title: const Text("Home"), 
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {
+                    //função que vai para perfil de usuário
+             },
+             icon: Icon(Icons.person)
+             ),
+              IconButton(
+                onPressed: () {
+                    //função que desconecta usuário
+             },
+             icon: Icon(Icons.logout),
+           )
+         ],backgroundColor: ThemeColors.appBar),
         backgroundColor: ThemeColors.background,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
