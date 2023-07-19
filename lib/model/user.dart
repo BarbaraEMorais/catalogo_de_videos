@@ -2,17 +2,19 @@ import 'dart:convert';
 
 class User {
   int? id;
-  String username;
+  String email;
+  String name;
   String password;
 
   // required obriga a passar o parametro
-  User({this.id, required this.username, required this.password});
+  User({this.id,required this.email , required this.name, required this.password});
 
   // pega usuario e retorna objeto map dele
   Map<String, dynamic> toMap(){
     return <String, dynamic>{
       "id": id,
-      "username": username,
+      "email": email,
+      "name": name,
       "password": password
     };
   }
@@ -22,7 +24,8 @@ class User {
     return User(
       // se map["id"] existir, retorna o map["id"]
       id: map["id"],
-      username: map["username"],
+      email: map["email"],
+      name: map["name"],
       password: map["password"]
     );
   }

@@ -1,5 +1,6 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
 import 'package:catalogo_de_videos/pages/add_video.dart';
+import 'package:catalogo_de_videos/pages/video_details.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
@@ -8,6 +9,7 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import '../model/video.dart';
 
 class HomePage extends StatefulWidget {
+  static String routeName = "/home";
   const HomePage({super.key});
 
   @override
@@ -37,6 +39,17 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  dynamic onTap(video) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VideoDetailsScreen(
+                  video: video,
+                ))).then((value) => setState(() {
+          getVideos();
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +70,8 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.add),
       ),
       body: loaded
-          ? Column(
+          ? SingleChildScrollView(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 movies.isEmpty
@@ -73,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                         children: (movies.map((video) => VideoCard(
                               name: video.name,
                               url: video.thumbnailImageId,
+                              onTap: () => onTap(video),
                             ))).toList()),
                 series.isEmpty
                     ? Padding(
@@ -87,9 +102,10 @@ class _HomePageState extends State<HomePage> {
                         children: (series.map((video) => VideoCard(
                               name: video.name,
                               url: video.thumbnailImageId,
+                              onTap: () => onTap(video),
                             ))).toList())
               ],
-            )
+            ))
           : const Center(child: CircularProgressIndicator()),
       bottomNavigationBar: const BottomNavigatorBarWidget(index: 0),
     );

@@ -1,7 +1,7 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/user.dart';
 
-class LoginController {
+class CadastroController {
   DatabaseHelper con = DatabaseHelper();
 
   Future<int> saveUser(User user) async {
@@ -20,13 +20,13 @@ class LoginController {
     return result;
   }
 
-  // a partir do user e senha, tenta pegar o login
-  Future<User> getLogin(String email, String password) async {
+  // a partir do user e senha, tenta pegar o Cadastro
+  Future<User> getCadastro(String name, String password) async {
     var db = await con.db;
 
     String sql = """
     SELECT * FROM user 
-    WHERE email='$email' AND password='$password';
+    WHERE name='$name' AND password='$password';
     """;
 
     var result = await db.rawQuery(sql);
@@ -43,5 +43,22 @@ class LoginController {
       name: "",
       password: "",
     );
+  }
+
+  Future<bool> verifyEmail(String email) async {
+    var db = await con.db;
+
+    String sql = """
+    SELECT * FROM user 
+    WHERE email='$email';
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    // significa que query retornou algo
+    if (result.isEmpty) {
+      return true;
+    }
+    return false;
   }
 }
