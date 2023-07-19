@@ -9,7 +9,7 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import '../model/video.dart';
 
 class HomePage extends StatefulWidget {
-  static String routeName = "/home";
+  static String routeName = "/";
   const HomePage({super.key});
 
   @override
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ))
           : const Center(child: CircularProgressIndicator()),
-      bottomNavigationBar: const BottomNavigatorBarWidget(index: 0),
+      bottomNavigationBar: const BottomNavigationBarWidget(index: 0),
     );
   }
 }

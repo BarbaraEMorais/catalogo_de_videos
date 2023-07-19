@@ -41,6 +41,8 @@ class VideoDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
+                      child: const Text("Editar"), onPressed: () => {}),
+                  ElevatedButton(
                     child: const Text("Excluir"),
                     onPressed: () => showDialog(
                         context: context,
@@ -51,15 +53,13 @@ class VideoDetailsScreen extends StatelessWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
-                                          Text('Video deletado com sucesso!')),
+                                          Text('Vídeo deletado com sucesso!')),
                                 );
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },
                             )),
                   ),
-                  ElevatedButton(
-                      child: const Text("Editar"), onPressed: () => {})
                 ],
               )
             ],

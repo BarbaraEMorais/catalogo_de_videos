@@ -1,13 +1,49 @@
+import 'package:catalogo_de_videos/pages/search.dart';
+import 'package:catalogo_de_videos/pages/home.dart';
+import 'package:catalogo_de_videos/pages/profile.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavigatorBarWidget extends StatelessWidget {
+class BottomNavigationBarWidget extends StatefulWidget {
   final int index;
-  const BottomNavigatorBarWidget({super.key, required this.index});
+  const BottomNavigationBarWidget({super.key, required this.index});
+
+  @override
+  State<BottomNavigationBarWidget> createState() =>
+      _BottomNavigationBarWidgetState();
+}
+
+class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+  void _onItemTapped(int index) {
+    if (index == widget.index) return;
+
+    Widget route;
+    switch (index) {
+      case 0:
+        route = const HomePage();
+        break;
+      case 1:
+        route = const SearchScreen();
+        break;
+      case 2:
+        route = const ProfileScreen();
+        break;
+      default:
+        route = const HomePage();
+    }
+    setState(() {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(pageBuilder: (_, __, ___) => route),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       backgroundColor: ThemeColors.dark,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -23,10 +59,10 @@ class BottomNavigatorBarWidget extends StatelessWidget {
           label: 'Perfil',
         ),
       ],
-      currentIndex: index,
+      currentIndex: widget.index,
+      onTap: _onItemTapped,
       selectedItemColor: ThemeColors.purple,
       unselectedItemColor: ThemeColors.grey,
-      // onTap: 1,
     );
   }
 }
