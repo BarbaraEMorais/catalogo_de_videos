@@ -1,5 +1,6 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
+import 'package:catalogo_de_videos/model/video_genre.dart';
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
@@ -44,11 +45,72 @@ class VideoController {
     """;
 
     var result = await db.rawQuery(sql);
+
     List<Video> series = <Video>[];
 
     for (var serie in result) {
       series.add(Video.fromMap(serie));
     }
     return series;
+  }
+
+  Future<List<Video>> getVideosByFilters(type, genre) async {
+    var db = await con.db;
+
+    dynamic queryGenre;
+
+    switch (genre) {
+      case 'Comedia':
+        {
+          queryGenre = "0";
+        }
+      case 'Terror':
+        {
+          queryGenre = "1";
+        }
+      case 'Aventura':
+        {
+          queryGenre = "2";
+        }
+      case 'Suspense':
+        {
+          queryGenre = "3";
+        }
+      case 'Ação':
+        {
+          queryGenre = "4";
+        }
+    }
+
+    String sql = """
+    SELECT * FROM video_genre WHERE genreid = $queryGenre;
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    List<VideoGenre> videosByGenre = <VideoGenre>[];
+    List<Video> videosByType = <Video>[];
+
+    for (var video in result) {
+      videosByGenre.add(VideoGenre.fromMap(video));
+    }
+
+    for (var filteredVideo in videosByGenre) {
+      String sql = """
+      SELECT * FROM video WHERE id = ${filteredVideo.video_id};
+      """;
+
+      var result = await db.rawQuery(sql);
+
+      for (var aux in result) {
+        Video video = Video.fromMap(aux);
+
+        if (video.type == type) {
+          videosByType.add(video);
+        }
+      }
+    }
+
+    return videosByType;
   }
 }
