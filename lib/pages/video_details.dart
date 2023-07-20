@@ -1,14 +1,42 @@
 import 'package:catalogo_de_videos/components/form/form_alert.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
+import 'package:catalogo_de_videos/controller/genre_controller.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class VideoDetailsScreen extends StatelessWidget {
+import '../model/genre.dart';
+
+class VideoDetailsScreen extends StatefulWidget {
   static String routeName = '/video_details';
-  final Video video;
-  const VideoDetailsScreen({super.key, required this.video});
+  late Video video;
+  VideoDetailsScreen({super.key, required this.video});
+
+  @override
+  State<VideoDetailsScreen> createState() => _VideoDetailsScreenState();
+}
+
+class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
+  late GenreController genreController;
+  late Genre genero;
+  bool loaded = false;
+
+  void getGenre() async {
+    genero = await genreController.getGenreByVideo(widget.video);
+    loaded = true;
+    setState(() {});
+  }
+
+  _VideoDetailsScreenState() {
+    genreController = GenreController();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getGenre();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,33 +54,44 @@ class VideoDetailsScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 30),
                 child: Column(children: [
                   VideoCard(
-                      name: video.name,
-                      url: video.thumbnailImageId,
+                      name: widget.video.name,
+                      url: widget.video.thumbnailImageId,
                       scale: 1.5),
                   Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "Descrição: " + video.description,
+                        "Descrição: " + widget.video.description,
                         style: TextStyle(color: ThemeColors.text),
                       )),
                   Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "Classificação Indicativa: " + video.ageRestriction,
+                        "Classificação Indicativa: " +
+                            widget.video.ageRestriction,
                         style: TextStyle(color: ThemeColors.text),
                       )),
                   Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "Tempo: " + video.durationMinutes.toString() + " minutos",
+                        "Tempo: " +
+                            widget.video.durationMinutes.toString() +
+                            " minutos",
                         style: TextStyle(color: ThemeColors.text),
                       )),
                   Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "Lançamento: " + video.releaseDate,
+                        "Lançamento: " + widget.video.releaseDate,
                         style: TextStyle(color: ThemeColors.text),
                       )),
+                  Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: loaded
+                          ? Text(
+                              "Gênero: " + genero.name,
+                              style: TextStyle(color: ThemeColors.text),
+                            )
+                          : const Center(child: CircularProgressIndicator())),
                 ]),
               ),
               Row(
@@ -67,7 +106,8 @@ class VideoDetailsScreen extends StatelessWidget {
                         builder: (BuildContext context) => FormAlert(
                               title: "Tem certeza que deseja excluir?",
                               onAccept: () async {
-                                await VideoController().deleteVideo(video);
+                                await VideoController()
+                                    .deleteVideo(widget.video);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
