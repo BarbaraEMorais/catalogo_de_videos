@@ -26,15 +26,9 @@ class _HomePageState extends State<HomePage> {
     controller = VideoController();
   }
 
-_loadVideos() async {
-  List<Video> videos = await controller.getVideosByFilters(0,"Terror");
-  //print(videos);
-}
-
   @override
   void initState() {
     super.initState();
-    _loadVideos();
     getVideos();
   }
 

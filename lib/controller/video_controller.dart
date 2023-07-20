@@ -45,6 +45,7 @@ class VideoController {
     """;
 
     var result = await db.rawQuery(sql);
+
     List<Video> series = <Video>[];
 
     for (var serie in result) {
@@ -55,26 +56,30 @@ class VideoController {
 
   Future<List<Video>> getVideosByFilters(type, genre) async {
     var db = await con.db;
-    List<Video> videosByType = <Video>[];
 
     dynamic queryGenre;
 
     switch (genre) {
-      case 'Comedia': {
-        queryGenre = "0";
-      }
-      case 'Terror': {
-        queryGenre = "1";
-      }
-      case 'Aventura': {
-        queryGenre = "2";
-      }
-      case 'Suspense': {
-        queryGenre = "3";
-      }
-      case 'Ação': {
-        queryGenre = "4";
-      }
+      case 'Comedia':
+        {
+          queryGenre = "0";
+        }
+      case 'Terror':
+        {
+          queryGenre = "1";
+        }
+      case 'Aventura':
+        {
+          queryGenre = "2";
+        }
+      case 'Suspense':
+        {
+          queryGenre = "3";
+        }
+      case 'Ação':
+        {
+          queryGenre = "4";
+        }
     }
 
     String sql = """
@@ -82,25 +87,25 @@ class VideoController {
     """;
 
     var result = await db.rawQuery(sql);
+
     List<VideoGenre> videosByGenre = <VideoGenre>[];
-    print("result:");
-    print(result);
+    List<Video> videosByType = <Video>[];
 
     for (var video in result) {
-      print(video);
       videosByGenre.add(VideoGenre.fromMap(video));
     }
 
-    for(var filteredVideo in videosByGenre) {
-      
+    for (var filteredVideo in videosByGenre) {
       String sql = """
-      SELECT * FROM video WHERE id = ${filteredVideo.id};
+      SELECT * FROM video WHERE id = ${filteredVideo.video_id};
       """;
-      
+
       var result = await db.rawQuery(sql);
-      
-      for (var video in videosByType) {
-        if (video.type == type){
+
+      for (var aux in result) {
+        Video video = Video.fromMap(aux);
+
+        if (video.type == type) {
           videosByType.add(video);
         }
       }

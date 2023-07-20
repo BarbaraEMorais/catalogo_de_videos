@@ -3,12 +3,7 @@ class VideoGenre {
   int video_id;
   int genre_id;
 
-  VideoGenre({
-    this.id,
-    required this.video_id, 
-    required this.genre_id});
-
-
+  VideoGenre({this.id, required this.video_id, required this.genre_id});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -22,12 +17,8 @@ class VideoGenre {
     return VideoGenre(
       // se map["id"] existir, retorna o map["id"]
       id: map["id"],
-      video_id: map["video_id"],
-      genre_id: map["genre_id"],
+      genre_id: map["genreid"],
+      video_id: map["videoid"],
     );
   }
-
 }
-
-
-
