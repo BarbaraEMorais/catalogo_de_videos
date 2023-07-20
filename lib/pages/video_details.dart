@@ -38,21 +38,21 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   Future<String> getCreator(video) async {
     var db = await con.db;
     String creatorName = "";
-    print("entrou");
-    print(video);
+    //print("entrou");
+    //print(video);
 
     String sql = """
           SELECT * FROM user WHERE id = ${video.creatorid}
     """;
 
     var result = await db.rawQuery(sql);
-    print(result);
+   // print(result);
 
     if (result.isNotEmpty) {
       creatorName = User.fromMap(result.first).name;
     }
 
-    print("creatorName: ${creatorName}");
+    //print("creatorName: ${creatorName}");
 
     return creatorName;
   }
@@ -147,12 +147,26 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                     ])
                               : const Center(
                                   child: CircularProgressIndicator())),
-                        Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: Text(
-                            "Criador: ${getCreator(widget.video)}",
-                            style: TextStyle(color: ThemeColors.text),
-                          )),
+                        FutureBuilder<String>(
+                          future: getCreator(widget.video), // Função que retorna o Future
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            // Verificar se o Future já foi resolvido
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                // Se houve um erro, retornar um widget com o erro
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              // Se foi resolvido sem erro, retornar um widget com o resultado
+                              return Text("Criador: ${snapshot.data}",
+                                style: TextStyle(color: ThemeColors.text),
+                              );
+                            }
+                            // Enquanto o Future não foi resolvido, mostrar um widget de carregamento
+                            else {
+                              return CircularProgressIndicator();
+                            }
+                          },
+                        )
                     ]),
               ),
               Row(
