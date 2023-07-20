@@ -22,6 +22,23 @@ class GenreController {
     return result;
   }
 
+  Future<List<Genre>> getGenres() async {
+    var db = await con.db;
+
+    String sql = """
+          SELECT * FROM genre
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    List<Genre> genres = <Genre>[];
+
+    for (var genre in result) {
+      genres.add(Genre.fromMap(genre));
+    }
+    return genres;
+  }
+
   Future<Genre> getGenreByVideo(Video video) async {
     var db = await con.db;
 
