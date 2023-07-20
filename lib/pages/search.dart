@@ -13,6 +13,7 @@ class SearchScreen extends StatelessWidget {
           title: const Text("Vídeos"),
           centerTitle: true,
           backgroundColor: ThemeColors.dark),
+      backgroundColor: ThemeColors.background,
       bottomNavigationBar: const BottomNavigationBarWidget(index: 1),
     );
   }
