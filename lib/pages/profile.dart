@@ -1,5 +1,6 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
 import 'package:catalogo_de_videos/model/user.dart';
+import 'package:catalogo_de_videos/pages/login.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +15,21 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late final User user;
+  bool _initialized = false;
 
   _signOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
       preferences.setInt("value", 0);
+
+      Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => const LoginPage(),
+        ),
+        (route) => false,
+      );
     });
   }
 
@@ -32,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     setState(() {
       user = User(email: email!, name: name!, password: password!);
+      _initialized = true;
     });
   }
 
@@ -49,29 +60,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           centerTitle: true,
           backgroundColor: ThemeColors.dark),
       backgroundColor: ThemeColors.background,
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(
-            Icons.person_4,
-            size: 200,
-            color: ThemeColors.grey,
-          ),
-          Column(children: [
-            Text(
-              user.name,
-              style: TextStyle(color: ThemeColors.text, fontSize: 26),
-            ),
-            const Padding(padding: EdgeInsets.only(bottom: 10)),
-            Text(
-              user.email,
-              style: TextStyle(color: ThemeColors.text),
-            ),
-          ]),
-          ElevatedButton(onPressed: _signOut, child: Text("Sair da conta"))
-        ],
-      )),
+      body: _initialized
+          ? Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(
+                  Icons.person_4,
+                  size: 200,
+                  color: ThemeColors.grey,
+                ),
+                Column(children: [
+                  Text(
+                    user.name,
+                    style: TextStyle(color: ThemeColors.text, fontSize: 26),
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 10)),
+                  Text(
+                    user.email,
+                    style: TextStyle(color: ThemeColors.text),
+                  ),
+                ]),
+                ElevatedButton(
+                    onPressed: _signOut, child: Text("Sair da conta"))
+              ],
+            ))
+          : const CircularProgressIndicator(),
       bottomNavigationBar: const BottomNavigationBarWidget(index: 2),
     );
   }
