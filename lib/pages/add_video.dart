@@ -4,6 +4,15 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+const List<String> generos = [
+          'Comedia',
+          'Terror',
+          'Aventura',
+          'Suspense',
+          'Ação'
+        ];
 
 class AddVideo extends StatefulWidget {
   static String routeName = "/add_video";
@@ -19,6 +28,7 @@ class _AddVideoState extends State<AddVideo> {
   String description = '';
   String ageRestriction = '';
   int duration = 0;
+  String generoEscolhido = generos.first;
   String releaseDate = '';
   int type = 0;
 
@@ -110,6 +120,22 @@ class _AddVideoState extends State<AddVideo> {
                       onChanged: (value) {
                         type = value;
                       },
+                    ),
+                    DropdownButton<String>(
+                      value: generoEscolhido,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          generoEscolhido = value!;
+                        });
+                      },
+                      items: generos.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     )
                   ]),
                 ),
