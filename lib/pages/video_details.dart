@@ -32,7 +32,25 @@ class VideoDetailsScreen extends StatelessWidget {
                   Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        video.description,
+                        "Descrição: " + video.description,
+                        style: TextStyle(color: ThemeColors.text),
+                      )),
+                  Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Classificação Indicativa: " + video.ageRestriction,
+                        style: TextStyle(color: ThemeColors.text),
+                      )),
+                  Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Tempo: " + video.durationMinutes.toString() + " minutos",
+                        style: TextStyle(color: ThemeColors.text),
+                      )),
+                  Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Lançamento: " + video.releaseDate,
                         style: TextStyle(color: ThemeColors.text),
                       )),
                 ]),
