@@ -1,24 +1,25 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
 import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
-import 'package:catalogo_de_videos/controller/genre_controller.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
-import 'package:catalogo_de_videos/model/genre.dart';
 import 'package:catalogo_de_videos/model/video.dart';
+import 'package:catalogo_de_videos/pages/video_details.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 const List<String> generos = [
-  'Comedia',
-  'Terror',
-  'Aventura',
-  'Suspense',
-  'Ação'
+  "",
+  "Comedia",
+  "Terror",
+  "Aventura",
+  "Suspense",
+  "Ação"
 ];
 
 const List<String> tipoDeVideo = [
-  'Filme',
-  'Serie',
+  "",
+  "Filme",
+  "Serie",
 ];
 
 class SearchScreen extends StatefulWidget {
@@ -42,10 +43,21 @@ class _SearchScreenState extends State<SearchScreen> {
 
   _search() async {
     videos = [];
+    if (tipoDeVideoEscolhido == "" || generoEscolhido == "") return;
     int type = tipoDeVideoEscolhido == 'Filme' ? 0 : 1;
     videos = await controller.getVideosByFilters(type, generoEscolhido);
     loaded = true;
     setState(() {});
+  }
+
+  void onTap(int id) async {
+    Video video = await controller.getVideoById(id);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VideoDetailsScreen(
+                  video: video,
+                ))).then((value) => setState(() {}));
   }
 
   @override
@@ -102,12 +114,14 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
             loaded
-                ? PostersDisplay(
-                    title: "",
-                    children: videos
-                        .map((e) =>
-                            VideoCard(name: e.name, url: e.thumbnailImageId))
-                        .toList())
+                ? SingleChildScrollView(
+                    child: Column(
+                        children: videos
+                            .map((video) => VideoCard(
+                                name: video.name,
+                                url: video.thumbnailImageId,
+                                onTap: () => onTap(video.id!)))
+                            .toList()))
                 : Container(),
           ])),
       bottomNavigationBar: const BottomNavigationBarWidget(index: 1),

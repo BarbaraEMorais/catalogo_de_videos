@@ -54,6 +54,19 @@ class VideoController {
     return series;
   }
 
+  Future<Video> getVideoById(int id) async {
+    var db = await con.db;
+
+    String sql = """
+    SELECT * FROM video WHERE id = $id;
+    """;
+
+    var result = await db.rawQuery(sql);
+    Video video = Video.fromMap(result.first);
+
+    return video;
+  }
+
   Future<List<Video>> getVideosByFilters(type, genre) async {
     var db = await con.db;
 
@@ -62,23 +75,23 @@ class VideoController {
     switch (genre) {
       case 'Comedia':
         {
-          queryGenre = "0";
+          queryGenre = "1";
         }
       case 'Terror':
         {
-          queryGenre = "1";
+          queryGenre = "2";
         }
       case 'Aventura':
         {
-          queryGenre = "2";
+          queryGenre = "3";
         }
       case 'Suspense':
         {
-          queryGenre = "3";
+          queryGenre = "4";
         }
       case 'Ação':
         {
-          queryGenre = "4";
+          queryGenre = "5";
         }
     }
 

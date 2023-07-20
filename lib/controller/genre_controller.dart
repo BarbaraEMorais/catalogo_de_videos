@@ -39,7 +39,7 @@ class GenreController {
     return genres;
   }
 
-  Future<Genre> getGenreByVideo(Video video) async {
+  Future<List<Genre>> getGenreByVideo(Video video) async {
     var db = await con.db;
 
     String sql = """
@@ -48,15 +48,16 @@ class GenreController {
     """;
 
     var result = await db.rawQuery(sql);
+
+    List<Genre> genres = <Genre>[];
+
     // significa que query retornou algo
     if (result.isNotEmpty) {
-      return Genre.fromMap(result.first);
+      for (var genre in result) {
+        genres.add(Genre.fromMap(genre));
+      }
     }
 
-    // genero padrao de erro
-    return Genre(
-      id: -1,
-      name: "",
-    );
+    return genres;
   }
 }

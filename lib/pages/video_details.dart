@@ -19,11 +19,11 @@ class VideoDetailsScreen extends StatefulWidget {
 
 class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   late GenreController genreController;
-  late Genre genero;
+  late List<Genre> generos;
   bool loaded = false;
 
   void getGenre() async {
-    genero = await genreController.getGenreByVideo(widget.video);
+    generos = await genreController.getGenreByVideo(widget.video);
     loaded = true;
     setState(() {});
   }
@@ -52,47 +52,65 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 30),
-                child: Column(children: [
-                  VideoCard(
-                      name: widget.video.name,
-                      url: widget.video.thumbnailImageId,
-                      scale: 1.5),
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Descrição: " + widget.video.description,
-                        style: TextStyle(color: ThemeColors.text),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Classificação Indicativa: " +
-                            widget.video.ageRestriction,
-                        style: TextStyle(color: ThemeColors.text),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Tempo: " +
-                            widget.video.durationMinutes.toString() +
-                            " minutos",
-                        style: TextStyle(color: ThemeColors.text),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Lançamento: " + widget.video.releaseDate,
-                        style: TextStyle(color: ThemeColors.text),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: loaded
-                          ? Text(
-                              "Gênero: " + genero.name,
-                              style: TextStyle(color: ThemeColors.text),
-                            )
-                          : const Center(child: CircularProgressIndicator())),
-                ]),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      VideoCard(
+                          name: widget.video.name,
+                          url: widget.video.thumbnailImageId,
+                          scale: 1.5),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: Text(
+                            "Descrição: " + widget.video.description,
+                            style: TextStyle(color: ThemeColors.text),
+                          )),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: Text(
+                            "Classificação Indicativa: " +
+                                widget.video.ageRestriction,
+                            style: TextStyle(color: ThemeColors.text),
+                          )),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: Text(
+                            "Tempo: " +
+                                widget.video.durationMinutes.toString() +
+                                " minutos",
+                            style: TextStyle(color: ThemeColors.text),
+                          )),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: Text(
+                            "Lançamento: " + widget.video.releaseDate,
+                            style: TextStyle(color: ThemeColors.text),
+                          )),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: loaded
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                      Text(
+                                        "Gêneros: ",
+                                        style:
+                                            TextStyle(color: ThemeColors.text),
+                                      ),
+                                      Row(
+                                          children: generos
+                                              .map((genero) => Text(
+                                                    "${genero.name} ",
+                                                    style: TextStyle(
+                                                        color:
+                                                            ThemeColors.text),
+                                                  ))
+                                              .toList()),
+                                    ])
+                              : const Center(
+                                  child: CircularProgressIndicator())),
+                    ]),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
