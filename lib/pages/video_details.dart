@@ -1,7 +1,11 @@
+//TO-DO: CORRIGIR RETORNO DA FUNÇÃO getCreator, pois no app está aparecendo "Instance of Future<String>"
+
 import 'package:catalogo_de_videos/components/form/form_alert.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
 import 'package:catalogo_de_videos/controller/genre_controller.dart';
+import 'package:catalogo_de_videos/model/user.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
+import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +25,42 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   late GenreController genreController;
   late List<Genre> generos;
   bool loaded = false;
+  DatabaseHelper con = DatabaseHelper();
 
   void getGenre() async {
     generos = await genreController.getGenreByVideo(widget.video);
     loaded = true;
     setState(() {});
   }
+
+
+
+  Future<String> getCreator(video) async {
+    var db = await con.db;
+    String creatorName = "";
+    print("entrou");
+    print(video);
+
+    String sql = """
+          SELECT * FROM user WHERE id = ${video.creatorid}
+    """;
+
+    var result = await db.rawQuery(sql);
+    print(result);
+
+    if (result.isNotEmpty) {
+      creatorName = User.fromMap(result.first).name;
+    }
+
+    print("creatorName: ${creatorName}");
+
+    return creatorName;
+  }
+
+/*_loadCreator(video) async {
+  String creatorName = await getCreator(video);
+  return creatorName;
+}*/
 
   _VideoDetailsScreenState() {
     genreController = GenreController();
@@ -36,7 +70,10 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   void initState() {
     super.initState();
     getGenre();
+    getCreator(widget.video);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +147,12 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                     ])
                               : const Center(
                                   child: CircularProgressIndicator())),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: Text(
+                            "Criador: ${getCreator(widget.video)}",
+                            style: TextStyle(color: ThemeColors.text),
+                          )),
                     ]),
               ),
               Row(

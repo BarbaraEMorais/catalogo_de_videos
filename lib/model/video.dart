@@ -7,6 +7,7 @@ class Video {
   int durationMinutes;
   String thumbnailImageId;
   String releaseDate;
+  int creatorid;
 
   Video(
       {this.id,
@@ -16,7 +17,8 @@ class Video {
       required this.ageRestriction,
       required this.durationMinutes,
       required this.releaseDate,
-      required this.thumbnailImageId});
+      required this.thumbnailImageId,
+      required this.creatorid});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -27,7 +29,8 @@ class Video {
       "ageRestriction": ageRestriction,
       "durationMinutes": durationMinutes,
       "releaseDate": releaseDate,
-      "thumbnailImageId": thumbnailImageId
+      "thumbnailImageId": thumbnailImageId,
+      "creatorid": creatorid
     };
   }
 
@@ -42,6 +45,7 @@ class Video {
       type: map["type"],
       releaseDate: map["releaseDate"],
       thumbnailImageId: map["thumbnailImageId"],
+      creatorid: map["creatorid"],
     );
   }
 }

@@ -1,6 +1,10 @@
+//TO-DO: CORRIGIR CREATOR_ID NA FUNÇÃO DE ADICIONAR VIDEO
+
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/components/form/form_radio_buttons.dart';
+
 import 'package:catalogo_de_videos/controller/video_controller.dart';
+import 'package:catalogo_de_videos/controller/login_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +21,7 @@ const List<String> generos = [
 class AddVideo extends StatefulWidget {
   static String routeName = "/add_video";
   const AddVideo({super.key});
+
 
   @override
   State<AddVideo> createState() => _AddVideoState();
@@ -150,7 +155,8 @@ class _AddVideoState extends State<AddVideo> {
                               ageRestriction: ageRestriction,
                               durationMinutes: duration,
                               releaseDate: releaseDate,
-                              thumbnailImageId: url);
+                              thumbnailImageId: url,
+                              creatorid: 0);//creatorid //id da pessoa logada);
 
                           if (_formKey.currentState!.validate()) {
                             int res = await VideoController().saveVideo(video);

@@ -18,12 +18,13 @@ final video = Video(
     ageRestriction: '',
     durationMinutes: 0,
     releaseDate: '',
-    thumbnailImageId: '');
+    thumbnailImageId: '',
+    creatorid: 0);
 
 final routes = {
   '/': (BuildContext context) => const HomePage(),
-  //LoginPage.routeName: (BuildContext context) => const LoginPage(),
-  //CadastroPage.routeName: (BuildContext context) => const CadastroPage(),
+  LoginPage.routeName: (BuildContext context) => const LoginPage(),
+  CadastroPage.routeName: (BuildContext context) => const CadastroPage(),
   AddVideo.routeName: (BuildContext context) => const AddVideo(),
   VideoDetailsScreen.routeName: (BuildContext context) =>
       VideoDetailsScreen(video: video),

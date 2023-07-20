@@ -1,9 +1,14 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
+
+
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
+
 
   Future<int> saveVideo(Video video) async {
     var db = await con.db;
@@ -23,6 +28,9 @@ class VideoController {
 
   Future<List<Video>> getMovies() async {
     var db = await con.db;
+    //final databasePath = await getDatabasesPath();
+    //final path = p.join(databasePath, "data.db");
+    //databaseFactory.deleteDatabase(path);
 
     String sql = """
     SELECT * FROM video WHERE type = 0;
