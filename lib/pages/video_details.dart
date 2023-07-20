@@ -33,34 +33,22 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     setState(() {});
   }
 
-
-
   Future<String> getCreator(video) async {
     var db = await con.db;
     String creatorName = "";
-    //print("entrou");
-    //print(video);
 
     String sql = """
           SELECT * FROM user WHERE id = ${video.creatorid}
     """;
 
     var result = await db.rawQuery(sql);
-   // print(result);
 
     if (result.isNotEmpty) {
       creatorName = User.fromMap(result.first).name;
     }
 
-    //print("creatorName: ${creatorName}");
-
     return creatorName;
   }
-
-/*_loadCreator(video) async {
-  String creatorName = await getCreator(video);
-  return creatorName;
-}*/
 
   _VideoDetailsScreenState() {
     genreController = GenreController();

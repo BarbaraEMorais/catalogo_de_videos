@@ -1,8 +1,11 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
+
+import '../model/user.dart';
 
 
 
@@ -134,4 +137,26 @@ class VideoController {
 
     return videosByType;
   }
+
+  Future<List<Video>> getMyVideos(int id) async {
+    var db = await con.db;
+
+    String sql = """
+        SELECT * FROM video WHERE creatorid = $id;
+      """;
+
+      var result = await db.rawQuery(sql);
+      List<Video> videos = <Video>[];
+
+    for (var video in result) {
+      videos.add(Video.fromMap(video));
+    }
+
+    print(videos[0].name);
+    return videos;
+  }
+
+
 }
+
+

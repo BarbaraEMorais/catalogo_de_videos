@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   List<Video> series = [];
   bool loaded = false;
 
+
   _HomePageState() {
     controller = VideoController();
   }
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getVideos();
+    controller.getMyVideos(0);
   }
 
   void getVideos() async {
