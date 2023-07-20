@@ -23,16 +23,15 @@ class _HomePageState extends State<HomePage> {
   List<Video> movies = [];
   List<Video> series = [];
   bool loaded = false;
+  late SharedPreferences preferences;
 
   _HomePageState() {
     controller = VideoController();
   }
 
   _signOut() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
     setState(() {
-      preferences.setInt("value", 0);
+      preferences.clear();
 
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
@@ -51,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getVideos() async {
+    preferences = await SharedPreferences.getInstance();
     movies = await controller.getMovies();
     series = await controller.getSeries();
     loaded = true;
@@ -83,16 +83,18 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: ThemeColors.dark),
       backgroundColor: ThemeColors.background,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ThemeColors.purple,
-        onPressed: () {
-          Navigator.pushNamed(context, AddVideo.routeName)
-              .then((value) => setState(() {
-                    getVideos();
-                  }));
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: loaded && preferences.getInt("value") == 1
+          ? FloatingActionButton(
+              backgroundColor: ThemeColors.purple,
+              onPressed: () {
+                Navigator.pushNamed(context, AddVideo.routeName)
+                    .then((value) => setState(() {
+                          getVideos();
+                        }));
+              },
+              child: const Icon(Icons.add),
+            )
+          : null,
       body: loaded
           ? SingleChildScrollView(
               child: Column(

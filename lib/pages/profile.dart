@@ -21,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
-      preferences.setInt("value", 0);
+      preferences.clear();
 
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
@@ -35,10 +35,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? name;
+    String? email;
+    String? password;
 
-    String? name = preferences.getString("username");
-    String? email = preferences.getString("email");
-    String? password = preferences.getString("password");
+    if (preferences.getInt("value") == null) {
+      name = "Visitante";
+      email = "";
+      password = "";
+    } else {
+      name = preferences.getString("username");
+      email = preferences.getString("email");
+      password = preferences.getString("password");
+    }
 
     setState(() {
       user = User(email: email!, name: name!, password: password!);
@@ -81,8 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(color: ThemeColors.text),
                   ),
                 ]),
-                ElevatedButton(
-                    onPressed: _signOut, child: Text("Sair da conta"))
+                ElevatedButton(onPressed: _signOut, child: Text("Sair"))
               ],
             ))
           : const CircularProgressIndicator(),

@@ -78,6 +78,16 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  _entrarSemConta() {
+    Navigator.pushAndRemoveUntil<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => const HomePage(),
+      ),
+      (route) => false,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -123,7 +133,14 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                   onPressed: () =>
                       {Navigator.pushNamed(context, CadastroPage.routeName)},
-                  child: const Text("Cadastre-se"))
+                  child: const Text("Cadastre-se")),
+              GestureDetector(
+                child: Text(
+                  "Entrar sem uma conta",
+                  style: TextStyle(color: Colors.cyan),
+                ),
+                onTap: _entrarSemConta,
+              )
             ]),
           )),
         );
