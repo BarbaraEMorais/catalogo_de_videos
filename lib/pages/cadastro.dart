@@ -74,7 +74,19 @@ class _CadastroPageState extends State<CadastroPage> {
               Form(
                 key: _formKey,
                 child: Column(
-                  children: [
+                  children: [/*
+                    Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: TextFormField(
+                            onSaved: (newValue) => _email = newValue,  
+                            //muda a variavel, ao inves de usar controller
+                            decoration: const InputDecoration(
+                              fillColor: Colors.black,
+                              labelText: "Usuário",
+                              border: OutlineInputBorder(),
+                            ),
+                          )
+                        ),*/
                     FormInput(label: "Nome", maxLines: 1, onChanged: (value)=> {_name = value}, keyboardType:TextInputType.text, validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Insira seu nome!';

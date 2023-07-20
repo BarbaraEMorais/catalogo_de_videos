@@ -1,4 +1,5 @@
 import 'package:catalogo_de_videos/pages/cadastro.dart';
+import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
@@ -109,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
     switch(_loginStatus){
       case LoginStatus.notSignIn:
         return Scaffold(
-          appBar: AppBar(title: const Text("Login Page")),
+          appBar: AppBar(title: const Text("Login Page"), backgroundColor: ThemeColors.appBar,),
           body: Container(
             child: Center(
               child: Column(
@@ -124,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                             onSaved: (newValue) => _email = newValue,  
                             //muda a variavel, ao inves de usar controller
                             decoration: const InputDecoration(
+                              fillColor: Colors.black,
                               labelText: "Usuário",
                               border: OutlineInputBorder(),
                             ),
