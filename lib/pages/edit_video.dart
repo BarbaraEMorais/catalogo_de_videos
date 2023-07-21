@@ -87,10 +87,8 @@ class _EditVideoState extends State<EditVideo> {
         }
     }
 
-    VideoGenre video_genre = VideoGenre(videoid: _video.id!, genreid: idGenre);
-
     if (_formKey.currentState!.validate()) {
-      int res = await VideoController().editVideo(_video, video_genre);
+      int res = await VideoController().editVideo(_video, idGenre);
       //print(_video.toMap());
       Navigator.pop(context);
       String typeString = "Filme editado";

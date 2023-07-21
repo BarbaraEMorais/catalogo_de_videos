@@ -28,7 +28,8 @@ class DatabaseHelper {
       version: 1,
       // onCreate acontece só a primeira vez
       onCreate: (db, version) async {
-        String sql_user = """
+        String sql_user =
+            """
         CREATE TABLE user(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR NOT NULL,
@@ -36,14 +37,16 @@ class DatabaseHelper {
             password VARCHAR NOT NULL
         );""";
 
-        String sql_genre = """
+        String sql_genre =
+            """
           CREATE TABLE genre(
                       id INTEGER PRIMARY KEY AUTOINCREMENT,
                       name VARCHAR NOT NULL
                   );
           """;
 
-        String sql_video = """
+        String sql_video =
+            """
                 CREATE TABLE video(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name VARCHAR(2) NOT NULL,
@@ -56,7 +59,8 @@ class DatabaseHelper {
                         );
                 """;
 
-        String sql_video_genre = """
+        String sql_video_genre =
+            """
                 CREATE TABLE video_genre(
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   videoid INTEGER NOT NULL,
@@ -126,27 +130,21 @@ class DatabaseHelper {
         await db.execute(add_serie);
 
         String add_video_genre_1 =
-            "INSERT INTO video_genre(videoid, genreid) VALUES(1, 1);";
-        String add_video_genre_2 =
             "INSERT INTO video_genre(videoid, genreid) VALUES(1, 2);";
-        String add_video_genre_3 =
+        String add_video_genre_2 =
             "INSERT INTO video_genre(videoid, genreid) VALUES(2, 5);";
-        String add_video_genre_4 =
+        String add_video_genre_3 =
             "INSERT INTO video_genre(videoid, genreid) VALUES(3, 4);";
-        String add_video_genre_5 =
+        String add_video_genre_4 =
             "INSERT INTO video_genre(videoid, genreid) VALUES(4, 3);";
-        String add_video_genre_6 =
-            "INSERT INTO video_genre(videoid, genreid) VALUES(5, 1);";
-        String add_video_genre_7 =
-            "INSERT INTO video_genre(videoid, genreid) VALUES(5, 5);";
+        String add_video_genre_5 =
+            "INSERT INTO video_genre(videoid, genreid) VALUES(5, 2);";
 
         await db.execute(add_video_genre_1);
         await db.execute(add_video_genre_2);
         await db.execute(add_video_genre_3);
         await db.execute(add_video_genre_4);
         await db.execute(add_video_genre_5);
-        await db.execute(add_video_genre_6);
-        await db.execute(add_video_genre_7);
       },
     );
     return db;
