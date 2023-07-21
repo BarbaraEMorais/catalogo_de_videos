@@ -17,7 +17,8 @@ final video = Video(
     ageRestriction: '',
     durationMinutes: 0,
     releaseDate: '',
-    thumbnailImageId: '');
+    thumbnailImageId: '',
+    creatorid: 0);
 
 final routes = {
   HomePage.routeName: (BuildContext context) => const HomePage(),

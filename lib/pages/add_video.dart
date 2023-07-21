@@ -1,10 +1,15 @@
+//TO-DO: CORRIGIR CREATOR_ID NA FUNÇÃO DE ADICIONAR VIDEO
+
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/components/form/form_radio_buttons.dart';
+
 import 'package:catalogo_de_videos/controller/video_controller.dart';
+import 'package:catalogo_de_videos/controller/login_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const List<String> generos = [
   'Comedia',
@@ -31,6 +36,8 @@ class _AddVideoState extends State<AddVideo> {
   String generoEscolhido = generos.first;
   String releaseDate = '';
   int type = 0;
+  int creatorId = 0;
+  late SharedPreferences preferences;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -42,9 +49,10 @@ class _AddVideoState extends State<AddVideo> {
         ageRestriction: ageRestriction,
         durationMinutes: duration,
         releaseDate: releaseDate,
-        thumbnailImageId: url);
+        thumbnailImageId: url,
+        creatorid: creatorId);
 
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && creatorId != 0) {
       int res = await VideoController().saveVideo(video);
       Navigator.pop(context);
       String typeString = "Filme adicionado";
@@ -53,6 +61,19 @@ class _AddVideoState extends State<AddVideo> {
         SnackBar(content: Text('$typeString com sucesso')),
       );
     }
+  }
+
+  getPref() async {
+    preferences = await SharedPreferences.getInstance();
+    creatorId = preferences.getInt("id")!;
+    String name = preferences.getString("name")!;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPref();
   }
 
   @override

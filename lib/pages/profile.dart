@@ -1,7 +1,9 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
 import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
+import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/user.dart';
+import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/pages/login.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late final User user;
   bool _initialized = false;
+  List<Video> videos = [];
 
   _signOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -54,6 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       password = preferences.getString("password");
     }
 
+    videos = await VideoController().getMyVideos(id!);
     setState(() {
       user = User(id: id, email: email!, name: name!, password: password!);
       _initialized = true;
@@ -95,20 +99,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(color: ThemeColors.text),
                   ),
                 ]),
-                PostersDisplay(title: "Meus Vídeos", children: [
-                  VideoCard(
-                      name: "teste",
-                      url:
-                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg'),
-                  VideoCard(
-                      name: "teste",
-                      url:
-                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg'),
-                  VideoCard(
-                      name: "teste",
-                      url:
-                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg')
-                ]),
+                videos.isNotEmpty
+                    ? PostersDisplay(
+                        title: "Meus Vídeos",
+                        children: videos
+                            .map((video) => VideoCard(
+                                name: video.name, url: video.thumbnailImageId))
+                            .toList())
+                    : Text(
+                        "Você não possui vídeos adicionados!",
+                        style: TextStyle(color: ThemeColors.text),
+                      ),
                 ElevatedButton(onPressed: _signOut, child: Text("Sair"))
               ],
             ))

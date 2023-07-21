@@ -1,6 +1,9 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/user.dart';
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
@@ -29,6 +32,7 @@ class VideoController {
     """;
 
     var result = await db.rawQuery(sql);
+
     List<Video> movies = <Video>[];
 
     for (var movie in result) {
@@ -62,6 +66,7 @@ class VideoController {
     """;
 
     var result = await db.rawQuery(sql);
+
     Video video = Video.fromMap(result.first);
 
     return video;
@@ -125,5 +130,41 @@ class VideoController {
     }
 
     return videosByType;
+  }
+
+  Future<List<Video>> getMyVideos(int id) async {
+    var db = await con.db;
+
+    String sql = """
+        SELECT * FROM video WHERE creatorid = $id;
+      """;
+
+    var result = await db.rawQuery(sql);
+
+    List<Video> videos = <Video>[];
+
+    for (var video in result) {
+      videos.add(Video.fromMap(video));
+    }
+
+    return videos;
+  }
+
+  Future<User> getCreator(Video video) async {
+    var db = await con.db;
+
+    User user = User(email: '', name: '', password: '');
+
+    String sql = """
+          SELECT * FROM user WHERE id = ${video.creatorid};
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    if (result.isNotEmpty) {
+      user = User.fromMap(result.first);
+    }
+
+    return user;
   }
 }

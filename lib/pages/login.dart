@@ -40,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
 
       try {
         User user = await controller.getLogin(_email!, _password!);
-
         if (user.id != -1) {
           savePref(1, user.id!, user.name, user.email, user.password);
           setState(() {
@@ -73,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() {
       preferences.setInt("value", value);
-      preferences.setInt("id", value);
+      preferences.setInt("id", id);
       preferences.setString("username", username);
       preferences.setString("email", email);
       preferences.setString("password", pass);

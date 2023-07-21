@@ -52,7 +52,9 @@ class DatabaseHelper {
                           ageRestriction VARCHAR NOT NULL,
                           durationMinutes INTEGER NOT NULL,
                           thumbnailImageId VARCHAR NOT NULL,
-                          releaseDate TEXT NOT NULL
+                          releaseDate TEXT NOT NULL,
+                          creatorid INTEGER NOT NULL,
+                          FOREIGN KEY(creatorid) REFERENCES user(id)
                         );
                 """;
 
@@ -115,14 +117,14 @@ class DatabaseHelper {
 
         for (int i = 0; i < 4; i++) {
           String sql_insert_video =
-              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('${videos[i]["name"]}', 'Descrição $i', 0, '18 anos', 120, '${videos[i]["url"]}', '01/01/2020');";
+              "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate, creatorid) VALUES('${videos[i]["name"]}', 'Descrição $i', 0, '18 anos', 120, '${videos[i]["url"]}', '01/01/2020', ${i + 1});";
           //type = 0 - filme
           //type = 1 - video
           await db.execute(sql_insert_video);
         }
 
         String add_serie =
-            "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Flash', 'Série do flash', 1, '18 anos', 120, 'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg', '01/01/2020');";
+            "INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate, creatorid) VALUES('Flash', 'Série do flash', 1, '18 anos', 120, 'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg', '01/01/2020', 1);";
         await db.execute(add_serie);
 
         String add_video_genre_1 =
