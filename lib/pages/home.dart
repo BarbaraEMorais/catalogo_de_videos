@@ -10,7 +10,6 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/video.dart';
 
-
 class HomePage extends StatefulWidget {
   static String routeName = "/";
   const HomePage({super.key});
@@ -75,6 +74,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
           title: const Text("Home"),
+          leading: Padding(
+              padding: EdgeInsets.all(5),
+              child: Image.asset('images/logoPng.png')),
           actions: <Widget>[
             IconButton(
               onPressed: _signOut,

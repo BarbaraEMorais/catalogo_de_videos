@@ -65,6 +65,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
           title: const Text("Home"), backgroundColor: ThemeColors.appBar),
       backgroundColor: ThemeColors.background,
       body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Padding(
               padding: const EdgeInsets.all(20),
               child: Center(

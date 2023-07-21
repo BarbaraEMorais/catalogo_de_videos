@@ -1,6 +1,7 @@
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/pages/cadastro.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
@@ -111,10 +112,12 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: ThemeColors.background,
           body: Container(
               margin: const EdgeInsets.all(20),
-              child: Center(
+              child: SingleChildScrollView(
+                  child: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Image.asset('images/logo.png', height: 200),
                       Form(
                         key: _formKey,
                         child: Column(children: [
@@ -145,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: _entrarSemConta,
                       )
                     ]),
-              )),
+              ))),
         );
       case LoginStatus.signIn:
         return const HomePage();

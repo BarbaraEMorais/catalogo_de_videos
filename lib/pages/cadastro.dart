@@ -63,10 +63,12 @@ class _CadastroPageState extends State<CadastroPage> {
       backgroundColor: ThemeColors.background,
       body: Container(
           margin: const EdgeInsets.all(20),
-          child: Center(
+          child: SingleChildScrollView(
+              child: Center(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Image.asset('images/logo.png', height: 200),
                   Form(
                     key: _formKey,
                     child: Column(children: [
@@ -111,7 +113,7 @@ class _CadastroPageState extends State<CadastroPage> {
                     ]),
                   ),
                 ]),
-          )),
+          ))),
     );
   }
 }
