@@ -67,23 +67,23 @@ class _EditVideoState extends State<EditVideo> {
     switch (_genre) {
       case 'Comedia':
         {
-          idGenre = 0;
+          idGenre = 1;
         }
       case 'Terror':
         {
-          idGenre = 1;
+          idGenre = 2;
         }
       case 'Aventura':
         {
-          idGenre = 2;
+          idGenre = 3;
         }
       case 'Suspense':
         {
-          idGenre = 3;
+          idGenre = 4;
         }
       case 'Ação':
         {
-          idGenre = 4;
+          idGenre = 5;
         }
     }
 

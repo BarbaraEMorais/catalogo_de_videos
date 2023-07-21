@@ -2,6 +2,7 @@
 
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/components/form/form_radio_buttons.dart';
+import 'package:catalogo_de_videos/controller/genre_controller.dart';
 
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/controller/login_controller.dart';
@@ -10,6 +11,8 @@ import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/genre.dart';
 
 const List<String> generos = [
   'Comedia',
@@ -42,7 +45,7 @@ class _AddVideoState extends State<AddVideo> {
   final _formKey = GlobalKey<FormState>();
 
   _onPressed() async {
-    Video video = Video(
+    Video _video = Video(
         name: name,
         description: description,
         type: type,
@@ -52,8 +55,32 @@ class _AddVideoState extends State<AddVideo> {
         thumbnailImageId: url,
         creatorid: creatorId);
 
+    int idGenre = -1;
+    switch (generoEscolhido) {
+      case 'Comedia':
+        {
+          idGenre = 1;
+        }
+      case 'Terror':
+        {
+          idGenre = 2;
+        }
+      case 'Aventura':
+        {
+          idGenre = 3;
+        }
+      case 'Suspense':
+        {
+          idGenre = 4;
+        }
+      case 'Ação':
+        {
+          idGenre = 5;
+        }
+    }
+
     if (_formKey.currentState!.validate() && creatorId != 0) {
-      int res = await VideoController().saveVideo(video);
+      int res = await VideoController().saveVideo(_video, idGenre);
       Navigator.pop(context);
       String typeString = "Filme adicionado";
       if (type == 1) typeString = "Série adicionada";

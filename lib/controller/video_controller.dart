@@ -6,15 +6,19 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
+import '../model/genre.dart';
 import '../model/user.dart';
 
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
 
-  Future<int> saveVideo(Video video) async {
+  Future<int> saveVideo(Video video, int genre_id) async {
     var db = await con.db;
 
     int result = await db.insert("video", video.toMap());
+    VideoGenre video_genre = VideoGenre(videoid: result, genreid: genre_id);
+    int result_video_genre =
+        await db.insert("video_genre", video_genre.toMap());
 
     return result;
   }

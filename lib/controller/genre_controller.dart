@@ -42,9 +42,33 @@ class GenreController {
   Future<List<Genre>> getGenreByVideo(Video video) async {
     var db = await con.db;
 
-    String sql = """
+    String sql =
+        """
     SELECT g.id, g.name FROM video_genre vg JOIN genre g ON vg.genreid = g.id
     WHERE vg.videoid ='${video.id}';
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    List<Genre> genres = <Genre>[];
+
+    // significa que query retornou algo
+    if (result.isNotEmpty) {
+      for (var genre in result) {
+        genres.add(Genre.fromMap(genre));
+      }
+    }
+
+    return genres;
+  }
+
+  Future<List<Genre>> getGenreByName(String name) async {
+    var db = await con.db;
+
+    String sql =
+        """
+    SELECT g.id, g.name FROM genre
+    WHERE name = '${name}';
     """;
 
     var result = await db.rawQuery(sql);
