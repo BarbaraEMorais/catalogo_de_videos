@@ -55,9 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       name = preferences.getString("username");
       email = preferences.getString("email");
       password = preferences.getString("password");
+      videos = await VideoController().getMyVideos(id!);
     }
 
-    videos = await VideoController().getMyVideos(id!);
     setState(() {
       user = User(id: id, email: email!, name: name!, password: password!);
       _initialized = true;

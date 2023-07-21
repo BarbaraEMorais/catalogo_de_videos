@@ -1,4 +1,6 @@
+import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/pages/cadastro.dart';
+import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
@@ -101,48 +103,46 @@ class _LoginPageState extends State<LoginPage> {
     switch (_loginStatus) {
       case LoginStatus.notSignIn:
         return Scaffold(
-          appBar: AppBar(title: const Text("Login Page")),
+          appBar: AppBar(
+            title: const Text("Login"),
+            backgroundColor: ThemeColors.appBar,
+            centerTitle: true,
+          ),
+          backgroundColor: ThemeColors.background,
           body: Container(
               child: Center(
-            child: Column(children: [
-              Form(
-                key: _formKey,
-                child: Column(children: [
-                  Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        onSaved: (newValue) => _email = newValue,
-                        //muda a variavel, ao inves de usar controller
-                        decoration: const InputDecoration(
-                          labelText: "Usuário",
-                          border: OutlineInputBorder(),
-                        ),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        onSaved: (newValue) => _password = newValue,
-                        //muda a variavel, ao inves de usar controller
-                        decoration: const InputDecoration(
-                          labelText: "Senha",
-                          border: OutlineInputBorder(),
-                        ),
-                      ))
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      FormInput(
+                          label: "Usuário",
+                          onChanged: (newValue) => _email = newValue),
+                      FormInput(
+                          label: "Senha",
+                          onChanged: (newValue) => _password = newValue),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: ElevatedButton(
+                              onPressed: _submit, child: const Text("Login"))),
+                      ElevatedButton(
+                          onPressed: () => {
+                                Navigator.pushNamed(
+                                    context, CadastroPage.routeName)
+                              },
+                          child: const Text("Cadastre-se")),
+                    ]),
+                  ),
+                  GestureDetector(
+                    child: Text(
+                      "Entrar sem uma conta",
+                      style: TextStyle(color: Colors.cyan),
+                    ),
+                    onTap: _entrarSemConta,
+                  )
                 ]),
-              ),
-              ElevatedButton(onPressed: _submit, child: const Text("Login")),
-              ElevatedButton(
-                  onPressed: () =>
-                      {Navigator.pushNamed(context, CadastroPage.routeName)},
-                  child: const Text("Cadastre-se")),
-              GestureDetector(
-                child: Text(
-                  "Entrar sem uma conta",
-                  style: TextStyle(color: Colors.cyan),
-                ),
-                onTap: _entrarSemConta,
-              )
-            ]),
           )),
         );
       case LoginStatus.signIn:

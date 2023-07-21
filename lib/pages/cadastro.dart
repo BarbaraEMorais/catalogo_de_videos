@@ -7,10 +7,7 @@ import '../model/user.dart';
 import '../styles/theme_colors.dart';
 import 'home.dart';
 
-enum LoginStatus{
-  notSignIn,
-  signIn
-}
+enum LoginStatus { notSignIn, signIn }
 
 class CadastroPage extends StatefulWidget {
   static String routeName = "/cadastro";
@@ -21,81 +18,97 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-  
   //LoginStatus _loginStatus = LoginStatus.notSignIn;
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
   // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
-  String? _name,_email, _password;
+  String? _name, _email, _password;
   // late so instancia quando precisar usar
   late CadastroController controller;
 
   // ou seja, instancia o controller se a pagina for chamada
-  _CadastroPageState(){
+  _CadastroPageState() {
     controller = CadastroController();
   }
 
-
-  void _submit() async{
+  void _submit() async {
     final form = _formKey.currentState;
-  
-    if (form!.validate()){
+
+    if (form!.validate()) {
       form.save();
       bool cadastrado = await controller.verifyEmail(_email!);
-      if (cadastrado){
-      User user = User(email: _email!, name: _name!, password: _password!);
-      controller.saveUser(user);
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (cadastrado) {
+        User user = User(email: _email!, name: _name!, password: _password!);
+        controller.saveUser(user);
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Cadastrado com sucesso')),
         );
-      }
-      else{
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Usuário já cadastrado')),
-          );
+          SnackBar(content: Text('Usuário já cadastrado')),
+        );
       }
-
     }
   }
 
   // switch case dentro do build dependendo do status
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cadastro"), 
-        backgroundColor: ThemeColors.appBar),
-        backgroundColor: ThemeColors.background,
+        title: const Text("Cadastro"),
+        backgroundColor: ThemeColors.appBar,
+        centerTitle: true,
+      ),
+      backgroundColor: ThemeColors.background,
       body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    FormInput(label: "Nome", maxLines: 1, onChanged: (value)=> {_name = value}, keyboardType:TextInputType.text, validator: (value) {
+          child: Center(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Form(
+            key: _formKey,
+            child: Column(children: [
+              FormInput(
+                  label: "Nome",
+                  maxLines: 1,
+                  onChanged: (value) => {_name = value},
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Insira seu nome!';
                     }
                     return null;
                   }),
-                    FormInput(label: "E-mail", maxLines: 1, onChanged: (value)=> {_email = value}, keyboardType:TextInputType.emailAddress, validator: (value) {
+              FormInput(
+                  label: "E-mail",
+                  maxLines: 1,
+                  onChanged: (value) => {_email = value},
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Insira seu e-mail!';
                     }
                     return null;
                   }),
-                  FormInput(label: "Senha", maxLines: 1, onChanged: (value)=> {_password = value}, keyboardType:TextInputType.text, validator: (value) {
+              FormInput(
+                  label: "Senha",
+                  maxLines: 1,
+                  onChanged: (value) => {_password = value},
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Insira sua senha!';
                     }
                     return null;
                   }),
-                  ]),
-              ), 
-              ElevatedButton(onPressed: _submit, child: const Text("Cadastrar"))]),)),
+              Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: ElevatedButton(
+                      onPressed: _submit, child: const Text("Cadastrar")))
+            ]),
+          ),
+        ]),
+      )),
     );
   }
 }
