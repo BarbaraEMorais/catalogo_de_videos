@@ -23,7 +23,7 @@ class VideoController {
     return result;
   }
 
-  Future<int> editVideo(Video video, VideoGenre video_genre) async {
+  Future<int> editVideo(Video video, int genre_id) async {
     var db = await con.db;
 
     int result_video = await db.update(
@@ -33,13 +33,16 @@ class VideoController {
       whereArgs: [video.id],
     );
 
-    int result_video_genre = await db.update(
-      "video_genre",
-      video_genre.toMap(),
-      where: 'id = ?',
-      whereArgs: [video_genre.id],
-    );
-    Video teste = await getVideoById(result_video);
+    String sql =
+        """
+    UPDATE video_genre SET genreid = $genre_id WHERE videoid = ${video.id};
+    """;
+
+    var result_video_genre = await db.rawUpdate(sql);
+
+    print(result_video_genre);
+    print(genre_id);
+
     return result_video;
   }
 
