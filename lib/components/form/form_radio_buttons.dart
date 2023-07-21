@@ -1,16 +1,24 @@
+import 'dart:ui';
+
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class FormRadioButtons extends StatefulWidget {
   final void Function(int) onChanged;
-  const FormRadioButtons({super.key, required this.onChanged});
+  final int type;
+  const FormRadioButtons({super.key, required this.onChanged, this.type = 0});
 
   @override
   State<FormRadioButtons> createState() => _FormRadioButtonState();
 }
 
 class _FormRadioButtonState extends State<FormRadioButtons> {
-  int _type = 0;
+  late int _type;
+  @override
+  void initState() {
+    _type = widget.type;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

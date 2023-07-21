@@ -60,7 +60,8 @@ class _EditVideoState extends State<EditVideo> {
         ageRestriction: ageRestriction,
         durationMinutes: duration,
         releaseDate: releaseDate,
-        thumbnailImageId: url);
+        thumbnailImageId: url,
+        creatorid: widget.video.creatorid);
 
     int idGenre = -1;
     print('entrou aq');

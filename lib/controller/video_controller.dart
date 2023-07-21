@@ -16,6 +16,28 @@ class VideoController {
     return result;
   }
 
+  Future<int> editVideo(Video video, VideoGenre video_genre) async {
+    var db = await con.db;
+
+    int result_video = await db.update(
+      "video",
+      video.toMap(),
+      where: 'id = ?',
+      whereArgs: [video.id],
+    );
+
+    int result_video_genre = await db.update(
+      "video_genre",
+      video_genre.toMap(),
+      where: 'id = ?',
+      whereArgs: [video_genre.id],
+    );
+    print(result_video);
+    Video teste = await getVideoById(result_video);
+    print(teste.toMap());
+    return result_video;
+  }
+
   Future<int> deleteVideo(Video video) async {
     var db = await con.db;
 
@@ -100,7 +122,8 @@ class VideoController {
         }
     }
 
-    String sql = """
+    String sql =
+        """
     SELECT * FROM video_genre WHERE genreid = $queryGenre;
     """;
 
@@ -114,8 +137,9 @@ class VideoController {
     }
 
     for (var filteredVideo in videosByGenre) {
-      String sql = """
-      SELECT * FROM video WHERE id = ${filteredVideo.video_id};
+      String sql =
+          """
+      SELECT * FROM video WHERE id = ${filteredVideo.videoid};
       """;
 
       var result = await db.rawQuery(sql);
@@ -135,7 +159,8 @@ class VideoController {
   Future<List<Video>> getMyVideos(int id) async {
     var db = await con.db;
 
-    String sql = """
+    String sql =
+        """
         SELECT * FROM video WHERE creatorid = $id;
       """;
 
@@ -155,7 +180,8 @@ class VideoController {
 
     User user = User(email: '', name: '', password: '');
 
-    String sql = """
+    String sql =
+        """
           SELECT * FROM user WHERE id = ${video.creatorid};
     """;
 

@@ -10,6 +10,7 @@ import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../model/genre.dart';
+import 'edit_video.dart';
 
 class VideoDetailsScreen extends StatefulWidget {
   static String routeName = '/video_details';
@@ -34,13 +35,20 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     setState(() {});
   }
 
+  void getVideo() async {
+    widget.video = await videoController.getVideoById(widget.video.id!);
+    loaded = true;
+    setState(() {});
+  }
+
   void getCreator() async {
-    creator = await VideoController().getCreator(widget.video);
+    creator = await videoController.getCreator(widget.video);
     setState(() {});
   }
 
   _VideoDetailsScreenState() {
     genreController = GenreController();
+    videoController = VideoController();
   }
 
   @override
@@ -150,7 +158,19 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
-                          child: const Text("Editar"), onPressed: () => {}),
+                          child: const Text("Editar"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditVideo(
+                                          video: widget.video,
+                                          genre: generos.first,
+                                        ))).then((value) => setState(() {
+                                  getVideo();
+                                  getGenre();
+                                }));
+                          }),
                       ElevatedButton(
                         child: const Text("Excluir"),
                         onPressed: () => showDialog(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class FormInput extends StatelessWidget {
   final String label;
   final int maxLines;
+  final String? initialValue;
   final void Function(String) onChanged;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
@@ -12,6 +13,7 @@ class FormInput extends StatelessWidget {
     super.key,
     required this.label,
     required this.onChanged,
+    this.initialValue,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
     this.validator,
@@ -27,6 +29,7 @@ class FormInput extends StatelessWidget {
                     bottom:
                         BorderSide(color: ThemeColors.formInput, width: 2.0))),
             child: TextFormField(
+              initialValue: initialValue ?? "",
               keyboardType: keyboardType,
               validator: validator,
               onChanged: onChanged,

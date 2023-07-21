@@ -1,24 +1,20 @@
 class VideoGenre {
   int? id;
-  int video_id;
-  int genre_id;
+  int videoid;
+  int genreid;
 
-  VideoGenre({this.id, required this.video_id, required this.genre_id});
+  VideoGenre({this.id, required this.videoid, required this.genreid});
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      "id": id,
-      "video_id": video_id,
-      "genre_id": genre_id
-    };
+    return <String, dynamic>{"id": id, "videoid": videoid, "genreid": genreid};
   }
 
   factory VideoGenre.fromMap(Map<String, dynamic> map) {
     return VideoGenre(
       // se map["id"] existir, retorna o map["id"]
       id: map["id"],
-      genre_id: map["genreid"],
-      video_id: map["videoid"],
+      genreid: map["genreid"],
+      videoid: map["videoid"],
     );
   }
 }
