@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   List<Video> series = [];
   bool loaded = false;
 
-
   _HomePageState() {
     controller = VideoController();
   }
@@ -60,6 +59,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   dynamic onTap(video) {
+    print(video.name);
     return Navigator.push(
         context,
         MaterialPageRoute(

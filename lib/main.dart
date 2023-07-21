@@ -8,7 +8,6 @@ import 'package:catalogo_de_videos/pages/video_details.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:flutter/material.dart';
 
-
 import 'pages/login.dart';
 
 final video = Video(
@@ -33,7 +32,6 @@ final routes = {
 };
 
 void main() {
-
   runApp(MaterialApp(
     title: "Login",
     debugShowCheckedModeBanner: false,

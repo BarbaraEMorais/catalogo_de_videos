@@ -2,16 +2,11 @@ import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
 
 import '../model/user.dart';
 
-
-
 class VideoController {
   DatabaseHelper con = DatabaseHelper();
-
 
   Future<int> saveVideo(Video video) async {
     var db = await con.db;
@@ -31,15 +26,13 @@ class VideoController {
 
   Future<List<Video>> getMovies() async {
     var db = await con.db;
-    //final databasePath = await getDatabasesPath();
-    //final path = p.join(databasePath, "data.db");
-    //databaseFactory.deleteDatabase(path);
 
     String sql = """
     SELECT * FROM video WHERE type = 0;
     """;
 
     var result = await db.rawQuery(sql);
+    print(result);
     List<Video> movies = <Video>[];
 
     for (var movie in result) {
@@ -145,18 +138,33 @@ class VideoController {
         SELECT * FROM video WHERE creatorid = $id;
       """;
 
-      var result = await db.rawQuery(sql);
-      List<Video> videos = <Video>[];
+    var result = await db.rawQuery(sql);
+    List<Video> videos = <Video>[];
 
     for (var video in result) {
       videos.add(Video.fromMap(video));
     }
 
-    print(videos[0].name);
     return videos;
   }
 
+  Future<String> getCreator(Video video) async {
+    var db = await con.db;
 
+    String creatorName = "";
+
+    String sql = """
+          SELECT * FROM user WHERE id = ${video.creatorid};
+    """;
+
+    var result = await db.rawQuery(sql);
+
+    print(result);
+
+    if (result.isNotEmpty) {
+      creatorName = User.fromMap(result.first).name;
+    }
+
+    return creatorName;
+  }
 }
-
-
