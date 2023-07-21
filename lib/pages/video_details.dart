@@ -60,8 +60,8 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    getGenre();
     getCreator();
+    getGenre();
     getPref();
   }
 
