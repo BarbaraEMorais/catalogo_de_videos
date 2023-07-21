@@ -141,11 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                         ]),
                       ),
                       GestureDetector(
-                        child: Text(
-                          "Entrar sem uma conta",
-                          style: TextStyle(color: Colors.cyan),
-                        ),
                         onTap: _entrarSemConta,
+                        child: Container(
+                            margin: const EdgeInsets.only(top: 40),
+                            child: const Text(
+                              "Entrar sem uma conta",
+                              style: TextStyle(color: Colors.cyan),
+                            )),
                       )
                     ]),
               ))),
