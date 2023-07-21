@@ -117,7 +117,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                           Text(
-                                            "Gêneros: ",
+                                            "Gênero: ",
                                             style: TextStyle(
                                                 color: ThemeColors.text),
                                           ),
