@@ -168,7 +168,18 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                           children: [
                             ElevatedButton(
                                 child: const Text("Editar"),
-                                onPressed: () => {}),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditVideo(
+                                                video: widget.video,
+                                                genre: generos.first,
+                                              ))).then((value) => setState(() {
+                                        getVideo();
+                                        getGenre();
+                                      }));
+                                }),
                             ElevatedButton(
                               child: const Text("Excluir"),
                               onPressed: () => showDialog(
