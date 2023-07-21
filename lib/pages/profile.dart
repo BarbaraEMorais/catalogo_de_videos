@@ -1,4 +1,6 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
+import 'package:catalogo_de_videos/components/posters_display.dart';
+import 'package:catalogo_de_videos/components/video_card.dart';
 import 'package:catalogo_de_videos/model/user.dart';
 import 'package:catalogo_de_videos/pages/login.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
@@ -35,22 +37,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? id;
     String? name;
     String? email;
     String? password;
 
     if (preferences.getInt("value") == null) {
+      id = null;
       name = "Visitante";
       email = "";
       password = "";
     } else {
+      id = preferences.getInt("id");
       name = preferences.getString("username");
       email = preferences.getString("email");
       password = preferences.getString("password");
     }
 
     setState(() {
-      user = User(email: email!, name: name!, password: password!);
+      user = User(id: id, email: email!, name: name!, password: password!);
       _initialized = true;
     });
   }
@@ -74,12 +79,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Icon(
-                  Icons.person_4,
-                  size: 200,
-                  color: ThemeColors.grey,
-                ),
                 Column(children: [
+                  Icon(
+                    Icons.person_4,
+                    size: 200,
+                    color: ThemeColors.grey,
+                  ),
                   Text(
                     user.name,
                     style: TextStyle(color: ThemeColors.text, fontSize: 26),
@@ -89,6 +94,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     user.email,
                     style: TextStyle(color: ThemeColors.text),
                   ),
+                ]),
+                PostersDisplay(title: "Meus Vídeos", children: [
+                  VideoCard(
+                      name: "teste",
+                      url:
+                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg'),
+                  VideoCard(
+                      name: "teste",
+                      url:
+                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg'),
+                  VideoCard(
+                      name: "teste",
+                      url:
+                          'http://fr.web.img6.acsta.net/pictures/20/08/12/11/02/3069967.jpg')
                 ]),
                 ElevatedButton(onPressed: _signOut, child: Text("Sair"))
               ],

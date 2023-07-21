@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         User user = await controller.getLogin(_email!, _password!);
 
         if (user.id != -1) {
-          savePref(1, user.name, user.email, user.password);
+          savePref(1, user.id!, user.name, user.email, user.password);
           setState(() {
             _loginStatus = LoginStatus.signIn;
           });
@@ -67,11 +67,13 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  savePref(int value, String username, String email, String pass) async {
+  savePref(
+      int value, int id, String username, String email, String pass) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
       preferences.setInt("value", value);
+      preferences.setInt("id", value);
       preferences.setString("username", username);
       preferences.setString("email", email);
       preferences.setString("password", pass);

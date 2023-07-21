@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const List<String> generos = [
-          'Comedia',
-          'Terror',
-          'Aventura',
-          'Suspense',
-          'Ação'
-        ];
+  'Comedia',
+  'Terror',
+  'Aventura',
+  'Suspense',
+  'Ação'
+];
 
 class AddVideo extends StatefulWidget {
   static String routeName = "/add_video";
@@ -33,6 +33,27 @@ class _AddVideoState extends State<AddVideo> {
   int type = 0;
 
   final _formKey = GlobalKey<FormState>();
+
+  _onPressed() async {
+    Video video = Video(
+        name: name,
+        description: description,
+        type: type,
+        ageRestriction: ageRestriction,
+        durationMinutes: duration,
+        releaseDate: releaseDate,
+        thumbnailImageId: url);
+
+    if (_formKey.currentState!.validate()) {
+      int res = await VideoController().saveVideo(video);
+      Navigator.pop(context);
+      String typeString = "Filme adicionado";
+      if (type == 1) typeString = "Série adicionada";
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('$typeString com sucesso')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +151,8 @@ class _AddVideoState extends State<AddVideo> {
                           generoEscolhido = value!;
                         });
                       },
-                      items: generos.map<DropdownMenuItem<String>>((String value) {
+                      items:
+                          generos.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -142,27 +164,7 @@ class _AddVideoState extends State<AddVideo> {
                 Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
-                        onPressed: () async {
-                          Video video = Video(
-                              name: name,
-                              description: description,
-                              type: type,
-                              ageRestriction: ageRestriction,
-                              durationMinutes: duration,
-                              releaseDate: releaseDate,
-                              thumbnailImageId: url);
-
-                          if (_formKey.currentState!.validate()) {
-                            int res = await VideoController().saveVideo(video);
-                            Navigator.pop(context);
-                            String typeString = "Filme adicionado";
-                            if (type == 1) typeString = "Série adicionada";
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text('$typeString com sucesso')),
-                            );
-                          }
-                        },
+                        onPressed: _onPressed,
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.resolveWith<Color?>(
