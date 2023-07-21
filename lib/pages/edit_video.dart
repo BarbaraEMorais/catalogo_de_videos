@@ -64,7 +64,6 @@ class _EditVideoState extends State<EditVideo> {
         creatorid: widget.video.creatorid);
 
     int idGenre = -1;
-    print('entrou aq');
     switch (_genre) {
       case 'Comedia':
         {
@@ -91,7 +90,6 @@ class _EditVideoState extends State<EditVideo> {
     VideoGenre video_genre = VideoGenre(videoid: _video.id!, genreid: idGenre);
 
     if (_formKey.currentState!.validate()) {
-      print("validou");
       int res = await VideoController().editVideo(_video, video_genre);
       //print(_video.toMap());
       Navigator.pop(context);

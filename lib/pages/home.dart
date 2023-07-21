@@ -10,6 +10,7 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/video.dart';
 
+
 class HomePage extends StatefulWidget {
   static String routeName = "/";
   const HomePage({super.key});

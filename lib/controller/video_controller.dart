@@ -2,6 +2,9 @@ import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
 
 import '../model/user.dart';
 
@@ -32,9 +35,7 @@ class VideoController {
       where: 'id = ?',
       whereArgs: [video_genre.id],
     );
-    print(result_video);
     Video teste = await getVideoById(result_video);
-    print(teste.toMap());
     return result_video;
   }
 
