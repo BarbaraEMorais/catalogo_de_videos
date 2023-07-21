@@ -7,6 +7,7 @@ import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/genre.dart';
 import 'edit_video.dart';
@@ -26,7 +27,13 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   late List<Genre> generos;
   late User creator;
   bool loaded = false;
+  late SharedPreferences preferences;
+
   DatabaseHelper con = DatabaseHelper();
+
+  getPref() async {
+    preferences = await SharedPreferences.getInstance();
+  }
 
   void getGenre() async {
     generos = await genreController.getGenreByVideo(widget.video);
@@ -55,6 +62,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     super.initState();
     getGenre();
     getCreator();
+    getPref();
   }
 
   @override
@@ -154,44 +162,37 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                       child: CircularProgressIndicator())),
                         ]),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                          child: const Text("Editar"),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditVideo(
-                                          video: widget.video,
-                                          genre: generos.first,
-                                        ))).then((value) => setState(() {
-                                  getVideo();
-                                  getGenre();
-                                }));
-                          }),
-                      ElevatedButton(
-                        child: const Text("Excluir"),
-                        onPressed: () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) => FormAlert(
-                                  title: "Tem certeza que deseja excluir?",
-                                  onAccept: () async {
-                                    await VideoController()
-                                        .deleteVideo(widget.video);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              'Vídeo deletado com sucesso!')),
-                                    );
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                )),
-                      ),
-                    ],
-                  )
+                  loaded && preferences.getInt("value") != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                                child: const Text("Editar"),
+                                onPressed: () => {}),
+                            ElevatedButton(
+                              child: const Text("Excluir"),
+                              onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => FormAlert(
+                                        title:
+                                            "Tem certeza que deseja excluir?",
+                                        onAccept: () async {
+                                          await VideoController()
+                                              .deleteVideo(widget.video);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    'Vídeo deletado com sucesso!')),
+                                          );
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )),
+                            ),
+                          ],
+                        )
+                      : Container()
                 ],
               )))),
     );
