@@ -57,58 +57,61 @@ class _CadastroPageState extends State<CadastroPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cadastro"),
-        backgroundColor: ThemeColors.appBar,
+        backgroundColor: ThemeColors.dark,
         centerTitle: true,
       ),
       backgroundColor: ThemeColors.background,
       body: Container(
+          margin: const EdgeInsets.all(20),
           child: Center(
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          Form(
-            key: _formKey,
-            child: Column(children: [
-              FormInput(
-                  label: "Nome",
-                  maxLines: 1,
-                  onChanged: (value) => {_name = value},
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira seu nome!';
-                    }
-                    return null;
-                  }),
-              FormInput(
-                  label: "E-mail",
-                  maxLines: 1,
-                  onChanged: (value) => {_email = value},
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira seu e-mail!';
-                    }
-                    return null;
-                  }),
-              FormInput(
-                  label: "Senha",
-                  maxLines: 1,
-                  onChanged: (value) => {_password = value},
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira sua senha!';
-                    }
-                    return null;
-                  }),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: ElevatedButton(
-                      onPressed: _submit, child: const Text("Cadastrar")))
-            ]),
-          ),
-        ]),
-      )),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      FormInput(
+                          label: "Nome",
+                          maxLines: 1,
+                          onChanged: (value) => {_name = value},
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Insira seu nome!';
+                            }
+                            return null;
+                          }),
+                      FormInput(
+                          label: "E-mail",
+                          maxLines: 1,
+                          onChanged: (value) => {_email = value},
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Insira seu e-mail!';
+                            }
+                            return null;
+                          }),
+                      FormInput(
+                          label: "Senha",
+                          maxLines: 1,
+                          onChanged: (value) => {_password = value},
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Insira sua senha!';
+                            }
+                            return null;
+                          }),
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: ElevatedButton(
+                              onPressed: _submit,
+                              child: const Text("Cadastrar")))
+                    ]),
+                  ),
+                ]),
+          )),
     );
   }
 }

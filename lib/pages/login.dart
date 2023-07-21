@@ -105,45 +105,47 @@ class _LoginPageState extends State<LoginPage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("Login"),
-            backgroundColor: ThemeColors.appBar,
+            backgroundColor: ThemeColors.dark,
             centerTitle: true,
           ),
           backgroundColor: ThemeColors.background,
           body: Container(
+              margin: const EdgeInsets.all(20),
               child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Form(
-                    key: _formKey,
-                    child: Column(children: [
-                      FormInput(
-                          label: "Usuário",
-                          onChanged: (newValue) => _email = newValue),
-                      FormInput(
-                          label: "Senha",
-                          onChanged: (newValue) => _password = newValue),
-                      Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: ElevatedButton(
-                              onPressed: _submit, child: const Text("Login"))),
-                      ElevatedButton(
-                          onPressed: () => {
-                                Navigator.pushNamed(
-                                    context, CadastroPage.routeName)
-                              },
-                          child: const Text("Cadastre-se")),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Form(
+                        key: _formKey,
+                        child: Column(children: [
+                          FormInput(
+                              label: "Usuário",
+                              onChanged: (newValue) => _email = newValue),
+                          FormInput(
+                              label: "Senha",
+                              onChanged: (newValue) => _password = newValue),
+                          Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: ElevatedButton(
+                                  onPressed: _submit,
+                                  child: const Text("Login"))),
+                          ElevatedButton(
+                              onPressed: () => {
+                                    Navigator.pushNamed(
+                                        context, CadastroPage.routeName)
+                                  },
+                              child: const Text("Cadastre-se")),
+                        ]),
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          "Entrar sem uma conta",
+                          style: TextStyle(color: Colors.cyan),
+                        ),
+                        onTap: _entrarSemConta,
+                      )
                     ]),
-                  ),
-                  GestureDetector(
-                    child: Text(
-                      "Entrar sem uma conta",
-                      style: TextStyle(color: Colors.cyan),
-                    ),
-                    onTap: _entrarSemConta,
-                  )
-                ]),
-          )),
+              )),
         );
       case LoginStatus.signIn:
         return const HomePage();

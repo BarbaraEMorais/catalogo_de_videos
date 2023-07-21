@@ -5,6 +5,7 @@ import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/user.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/pages/login.dart';
+import 'package:catalogo_de_videos/pages/video_details.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  dynamic onTap(video) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VideoDetailsScreen(
+                  video: video,
+                ))).then((value) => setState(() {}));
+  }
+
   @override
   void initState() {
     getPref();
@@ -104,7 +114,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: "Meus Vídeos",
                         children: videos
                             .map((video) => VideoCard(
-                                name: video.name, url: video.thumbnailImageId))
+                                name: video.name,
+                                url: video.thumbnailImageId,
+                                onTap: () => onTap(video)))
                             .toList())
                     : Text(
                         "Você não possui vídeos adicionados!",

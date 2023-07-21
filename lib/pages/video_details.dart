@@ -134,7 +134,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                       child: CircularProgressIndicator())),
                           Container(
                               margin: EdgeInsets.only(top: 20),
-                              child: loaded
+                              child: loaded && creator != null
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
