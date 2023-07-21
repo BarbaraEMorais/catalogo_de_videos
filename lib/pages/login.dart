@@ -126,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                               onChanged: (newValue) => _email = newValue),
                           FormInput(
                               label: "Senha",
+                              obscureText: true,
                               onChanged: (newValue) => _password = newValue),
                           Container(
                               margin: const EdgeInsets.only(top: 20),

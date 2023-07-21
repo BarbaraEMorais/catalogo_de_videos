@@ -97,6 +97,7 @@ class _CadastroPageState extends State<CadastroPage> {
                       FormInput(
                           label: "Senha",
                           maxLines: 1,
+                          obscureText: true,
                           onChanged: (value) => {_password = value},
                           keyboardType: TextInputType.text,
                           validator: (value) {
