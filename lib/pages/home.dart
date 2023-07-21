@@ -9,6 +9,8 @@ import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/video.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
 
 class HomePage extends StatefulWidget {
   static String routeName = "/";
@@ -56,6 +58,9 @@ class _HomePageState extends State<HomePage> {
     movies = await controller.getMovies();
     series = await controller.getSeries();
     loaded = true;
+    //final databasePath = await getDatabasesPath();
+    //final path = p.join(databasePath, "data.db");
+    //databaseFactory.deleteDatabase(path);
     setState(() {});
   }
 

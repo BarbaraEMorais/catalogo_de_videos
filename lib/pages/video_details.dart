@@ -38,7 +38,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     String creatorName = "";
 
     String sql = """
-          SELECT * FROM user WHERE id = ${video.creatorid}
+          SELECT * FROM user WHERE id = ${video.creatorid};
     """;
 
     var result = await db.rawQuery(sql);
