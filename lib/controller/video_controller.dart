@@ -33,8 +33,7 @@ class VideoController {
       whereArgs: [video.id],
     );
 
-    String sql =
-        """
+    String sql = """
     UPDATE video_genre SET genreid = $genre_id WHERE videoid = ${video.id};
     """;
 
@@ -130,8 +129,7 @@ class VideoController {
         }
     }
 
-    String sql =
-        """
+    String sql = """
     SELECT * FROM video_genre WHERE genreid = $queryGenre;
     """;
 
@@ -145,8 +143,7 @@ class VideoController {
     }
 
     for (var filteredVideo in videosByGenre) {
-      String sql =
-          """
+      String sql = """
       SELECT * FROM video WHERE id = ${filteredVideo.videoid};
       """;
 
@@ -167,8 +164,7 @@ class VideoController {
   Future<List<Video>> getMyVideos(int id) async {
     var db = await con.db;
 
-    String sql =
-        """
+    String sql = """
         SELECT * FROM video WHERE creatorid = $id;
       """;
 
@@ -188,8 +184,7 @@ class VideoController {
 
     User user = User(email: '', name: '', password: '');
 
-    String sql =
-        """
+    String sql = """
           SELECT * FROM user WHERE id = ${video.creatorid};
     """;
 
