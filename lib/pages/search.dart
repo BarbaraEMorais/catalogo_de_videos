@@ -1,5 +1,4 @@
 import 'package:catalogo_de_videos/components/bottom_navigator.dart';
-import 'package:catalogo_de_videos/components/posters_display.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
@@ -79,7 +78,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: const TextStyle(color: Colors.deepPurple),
                   onChanged: (String? value) {
                     loaded = false;
-                    // This is called when the user selects an item.
                     setState(() {
                       generoEscolhido = value!;
                     });
@@ -95,7 +93,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   value: tipoDeVideoEscolhido,
                   style: const TextStyle(color: Colors.deepPurple),
                   onChanged: (String? value) {
-                    // This is called when the user selects an item.
                     setState(() {
                       loaded = false;
                       tipoDeVideoEscolhido = value!;

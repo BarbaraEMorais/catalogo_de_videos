@@ -11,7 +11,6 @@ class VideoGenre {
 
   factory VideoGenre.fromMap(Map<String, dynamic> map) {
     return VideoGenre(
-      // se map["id"] existir, retorna o map["id"]
       id: map["id"],
       genreid: map["genreid"],
       videoid: map["videoid"],

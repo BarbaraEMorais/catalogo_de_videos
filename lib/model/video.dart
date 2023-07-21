@@ -36,7 +36,6 @@ class Video {
 
   factory Video.fromMap(Map<String, dynamic> map) {
     return Video(
-      // se map["id"] existir, retorna o map["id"]
       id: map["id"],
       name: map["name"],
       description: map["description"],

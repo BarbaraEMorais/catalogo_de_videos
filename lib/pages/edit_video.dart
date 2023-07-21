@@ -2,7 +2,6 @@ import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/components/form/form_radio_buttons.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
-import 'package:catalogo_de_videos/model/video_genre.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -89,7 +88,6 @@ class _EditVideoState extends State<EditVideo> {
 
     if (_formKey.currentState!.validate()) {
       int res = await VideoController().editVideo(_video, idGenre);
-      //print(_video.toMap());
       Navigator.pop(context);
       String typeString = "Filme editado";
       if (type == 1) typeString = "Série editada";

@@ -11,10 +11,8 @@ class Genre {
     };
   }
 
-  // factory primeiro executa o que ta dentro, antes de criar a instancia. um construtor estÃ¡tico
   factory Genre.fromMap(Map<String, dynamic> map) {
     return Genre(
-      // se map["id"] existir, retorna o map["id"]
       id: map["id"],
       name: map["name"],
     );

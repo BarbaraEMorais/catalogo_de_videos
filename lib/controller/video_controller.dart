@@ -1,12 +1,6 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/model/video_genre.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
-
-import '../model/genre.dart';
 import '../model/user.dart';
 
 class VideoController {
@@ -38,9 +32,6 @@ class VideoController {
     """;
 
     var result_video_genre = await db.rawUpdate(sql);
-
-    print(result_video_genre);
-    print(genre_id);
 
     return result_video;
   }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,5 @@
 import 'package:catalogo_de_videos/helper/database_helper.dart';
 import 'package:catalogo_de_videos/model/genre.dart';
-
 import '../model/video.dart';
 
 class GenreController {
@@ -42,8 +41,7 @@ class GenreController {
   Future<List<Genre>> getGenreByVideo(Video video) async {
     var db = await con.db;
 
-    String sql =
-        """
+    String sql = """
     SELECT g.id, g.name FROM video_genre vg JOIN genre g ON vg.genreid = g.id
     WHERE vg.videoid ='${video.id}';
     """;
@@ -52,7 +50,6 @@ class GenreController {
 
     List<Genre> genres = <Genre>[];
 
-    // significa que query retornou algo
     if (result.isNotEmpty) {
       for (var genre in result) {
         genres.add(Genre.fromMap(genre));
@@ -65,8 +62,7 @@ class GenreController {
   Future<List<Genre>> getGenreByName(String name) async {
     var db = await con.db;
 
-    String sql =
-        """
+    String sql = """
     SELECT g.id, g.name FROM genre
     WHERE name = '${name}';
     """;
@@ -75,7 +71,6 @@ class GenreController {
 
     List<Genre> genres = <Genre>[];
 
-    // significa que query retornou algo
     if (result.isNotEmpty) {
       for (var genre in result) {
         genres.add(Genre.fromMap(genre));

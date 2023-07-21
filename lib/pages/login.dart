@@ -1,7 +1,6 @@
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/pages/cadastro.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/login_controller.dart';
@@ -21,13 +20,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   final _formKey = GlobalKey<FormState>();
-  // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
   String? _email, _password;
-  // late so instancia quando precisar usar
   late LoginController controller;
   var value;
 
-  // ou seja, instancia o controller se a pagina for chamada
   _LoginPageState() {
     controller = LoginController();
   }
@@ -35,11 +31,8 @@ class _LoginPageState extends State<LoginPage> {
   void _submit() async {
     final form = _formKey.currentState;
 
-    // valida todos os campos
     if (form!.validate()) {
       form.save();
-
-      //verifica se login e usuario bate com banco de dados
 
       try {
         User user = await controller.getLogin(_email!, _password!);
@@ -98,7 +91,6 @@ class _LoginPageState extends State<LoginPage> {
     getPref();
   }
 
-  // switch case dentro do build dependendo do status
   @override
   Widget build(BuildContext context) {
     switch (_loginStatus) {

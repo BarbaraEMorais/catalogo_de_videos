@@ -31,12 +31,10 @@ class LoginController {
 
     var result = await db.rawQuery(sql);
 
-    // significa que query retornou algo
     if (result.isNotEmpty) {
       return User.fromMap(result.first);
     }
 
-    // usuario padrao de erro
     return User(
       id: -1,
       email: "",

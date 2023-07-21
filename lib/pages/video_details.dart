@@ -1,7 +1,6 @@
 import 'package:catalogo_de_videos/components/form/form_alert.dart';
 import 'package:catalogo_de_videos/components/video_card.dart';
 import 'package:catalogo_de_videos/controller/genre_controller.dart';
-import 'package:catalogo_de_videos/main.dart';
 import 'package:catalogo_de_videos/model/user.dart';
 import 'package:catalogo_de_videos/controller/video_controller.dart';
 import 'package:catalogo_de_videos/helper/database_helper.dart';

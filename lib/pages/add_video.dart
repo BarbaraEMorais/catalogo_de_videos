@@ -1,18 +1,10 @@
-//TO-DO: CORRIGIR CREATOR_ID NA FUNÇÃO DE ADICIONAR VIDEO
-
 import 'package:catalogo_de_videos/components/form/form_input.dart';
 import 'package:catalogo_de_videos/components/form/form_radio_buttons.dart';
-import 'package:catalogo_de_videos/controller/genre_controller.dart';
-
 import 'package:catalogo_de_videos/controller/video_controller.dart';
-import 'package:catalogo_de_videos/controller/login_controller.dart';
 import 'package:catalogo_de_videos/model/video.dart';
 import 'package:catalogo_de_videos/styles/theme_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../model/genre.dart';
 
 const List<String> generos = [
   'Comedia',
@@ -194,7 +186,6 @@ class _AddVideoState extends State<AddVideo> {
                       value: generoEscolhido,
                       style: const TextStyle(color: Colors.deepPurple),
                       onChanged: (String? value) {
-                        // This is called when the user selects an item.
                         setState(() {
                           generoEscolhido = value!;
                         });
@@ -217,8 +208,7 @@ class _AddVideoState extends State<AddVideo> {
                           backgroundColor:
                               MaterialStateProperty.resolveWith<Color?>(
                             (Set<MaterialState> states) {
-                              return ThemeColors
-                                  .formInput; // defer to the defaults
+                              return ThemeColors.formInput;
                             },
                           ),
                         ),

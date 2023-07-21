@@ -1,11 +1,8 @@
 import 'package:catalogo_de_videos/components/form/form_input.dart';
-import 'package:catalogo_de_videos/pages/login.dart';
 import 'package:flutter/material.dart';
 import '../controller/cadastro_controller.dart';
-import '../controller/login_controller.dart';
 import '../model/user.dart';
 import '../styles/theme_colors.dart';
-import 'home.dart';
 
 enum LoginStatus { notSignIn, signIn }
 
@@ -18,14 +15,10 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-  //LoginStatus _loginStatus = LoginStatus.notSignIn;
   final _formKey = GlobalKey<FormState>();
-  // chave pra representar o formulario na aplicação, esse widget precisa dessa chave
   String? _name, _email, _password;
-  // late so instancia quando precisar usar
   late CadastroController controller;
 
-  // ou seja, instancia o controller se a pagina for chamada
   _CadastroPageState() {
     controller = CadastroController();
   }
@@ -51,7 +44,6 @@ class _CadastroPageState extends State<CadastroPage> {
     }
   }
 
-  // switch case dentro do build dependendo do status
   @override
   Widget build(BuildContext context) {
     return Scaffold(
